@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Cheng Yanru&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Cheng Yanru&#39;s Blog">
+<meta property="og:url" content="https://cyanru.com/blog/page/3/index.html">
+<meta property="og:site_name" content="Cheng Yanru&#39;s Blog">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Cheng Yanru">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Cheng Yanru&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Cheng Yanru&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cyanru.com/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-count-all-valid-pickup-and-delivery-options" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/02/23/count-all-valid-pickup-and-delivery-options/" class="article-date">
+  <time datetime="2020-02-23T08:56:00.000Z" itemprop="datePublished">2020-02-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/02/23/count-all-valid-pickup-and-delivery-options/">Count All Valid Pickup And Delivery Options&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/count-all-valid-pickup-and-delivery-options">Count All Valid Pickup And Delivery Options</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/count-all-valid-pickup-and-delivery-options/discuss/516933/C%2B%2BPython-1-line-Simple-permutation-with-explanation">Solution</a></p>
+<p><strong>Idea</strong><br><br>Denote <code>pickup 1, pickup 2, pickup 3, ...</code> as <code>A, B, C, ...</code><br><br>Denote <code>delivery 1, delivery 2, delivery 3, ...</code> as <code>a, b, c, ...</code><br><br>We need to ensure <code>a</code> is behind <code>A</code>, <code>b</code> is behind <code>B</code>, …</p>
+<p>This solution involves  2 stages.</p>
+<li>Stage 1
+<ul>
+- We decide the order of all the pickups. It is trivial to tell there are `n!` possibilities
+
+<ul>
+<li><p>Given one possibility. Let’s say the pickups are ordered  like this <code>A B C</code></p>
+<li>We can now insert the corresponding deliveries one by one.
+<ul>
+<li>We start with the last pickup we made, namely, insert `c`, and there is only 1 valid slot.
+<ul></li>
+<li><p><code>A B C c</code></p>
+</li>
+<li><p><code>A B</code> <strong>x</strong> <code>C</code> <strong>x</strong> <code>c</code> <strong>x</strong> (where <strong>x</strong> denotes the location of valid slots for <code>b</code>)</p>
+</li>
+<li><p><code>A</code> <strong>x</strong> <code>B</code> <strong>x</strong> <code>C</code> <strong>x</strong> <code>c</code> <strong>x</strong> <code>b</code> <strong>x</strong>, (where <strong>x</strong> denotes the location of valid slots for <code>a</code>)</p>
+</li>
+</ul>
+<p><strong>Complexity</strong><br><br>Time: <code>O(n)</code>, can be improved to <code>O(1)</code> with memoization<br><br>Space: <code>O(1)</code></p>
+<p><strong>C++</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int countOrders(int n) &#123;</span><br><span class="line">    long long res &#x3D; 1, cap &#x3D; 1000000007;</span><br><span class="line">    for (int i&#x3D;1; i&lt;n+1; ++i) res &#x3D; res * i % cap;</span><br><span class="line">    for (int i&#x3D;1; i&lt;2*n; i+&#x3D;2) res &#x3D; res * i % cap;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Python 3, with explanations and meaningful variable names</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line">from operator import mul</span><br><span class="line">class Solution:</span><br><span class="line">    def countOrders(self, n: int) -&gt; int:</span><br><span class="line">        cap &#x3D; 10**9 + 7</span><br><span class="line">        pickup_permutation &#x3D; math.factorial(n) % cap</span><br><span class="line">        delivery_permutation &#x3D; reduce(mul, range(1, 2*n, 2), 1) % cap</span><br><span class="line">        return pickup_permutation * delivery_permutation % cap</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Python 3, 1-line, mod along the way, O(1) space (12.8 MB)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line">class Solution:</span><br><span class="line">    def countOrders(self, n: int) -&gt; int:</span><br><span class="line">        # remember to use generator instead of tuple for O(1) space complexity</span><br><span class="line">        return reduce(lambda x, y: x * y % (10**9+7), (v for x in range(1,n+1) for v in (x, 2*x-1)), 1)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Python 3, 1-line, short, O(n) space</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line">from operator import mul</span><br><span class="line">class Solution:</span><br><span class="line">    def countOrders(self, n: int) -&gt; int:</span><br><span class="line">        return reduce(mul, (*range(1,n+1), *range(1,2*n,2)), 1) % (10**9+7)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/02/23/count-all-valid-pickup-and-delivery-options/" data-id="cke3xykru00024ilu9cetbfta" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-construct-target-array-with-multiple-sums" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/02/18/construct-target-array-with-multiple-sums/" class="article-date">
+  <time datetime="2020-02-18T12:33:00.000Z" itemprop="datePublished">2020-02-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/02/18/construct-target-array-with-multiple-sums/">Construct Target Array With Multiple Sums&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/construct-target-array-with-multiple-sums">Construct Target Array With Multiple Sums</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/construct-target-array-with-multiple-sums/discuss/510338/python-replace-reversely-pass-1e911-priority-queue">Solution</a></p>
+<p>The Idea is to reversely construct <code>[1, 1, ..., 1]</code> from <code>target</code>.</p>
+<p><strong>Complexity</strong><br><br>Given the steps <code>K</code> to construct the target:<br><br>Time: O(KlogK)<br><br>Space: O(N)</p>
+<p><strong>Updated Python 3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import heapq</span><br><span class="line">class Solution:</span><br><span class="line">    def isPossible(self, A):</span><br><span class="line">        q &#x3D; [-x for x in A]</span><br><span class="line">        heapq.heapify(q)</span><br><span class="line">        sm &#x3D; sum(A)</span><br><span class="line">        while True:</span><br><span class="line">            high, rest &#x3D; -q[0], sm + q[0]</span><br><span class="line">            if high &#x3D;&#x3D; 1 or rest &#x3D;&#x3D; 1: return True</span><br><span class="line">            original &#x3D; high % rest</span><br><span class="line">            if rest &gt;&#x3D; high or not original: return False</span><br><span class="line">            sm -&#x3D; high - original</span><br><span class="line">            heapq.heapreplace(q, -original)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Orignal Python 3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import heapq</span><br><span class="line">class Solution:</span><br><span class="line">    def isPossible(self, target: List[int]) -&gt; bool:</span><br><span class="line">        sm &#x3D; sum(target)</span><br><span class="line">        q &#x3D; [-x for x in target]</span><br><span class="line">        heapq.heapify(q)</span><br><span class="line">        while True:</span><br><span class="line">            high &#x3D; -q[0]</span><br><span class="line">            original &#x3D; 2*high - sm</span><br><span class="line">            if original &gt; high or original &lt; 1: return False</span><br><span class="line">            sm -&#x3D; high - original</span><br><span class="line">            heapq.heapreplace(q, -original)</span><br><span class="line">            if all(x &#x3D;&#x3D; -1 for x in q):</span><br><span class="line">                return True</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/02/18/construct-target-array-with-multiple-sums/" data-id="cke3xykrt00014ilu9slwadyh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-maximum-students-taking-exam" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/02/09/maximum-students-taking-exam/" class="article-date">
+  <time datetime="2020-02-09T15:10:00.000Z" itemprop="datePublished">2020-02-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/02/09/maximum-students-taking-exam/">Maximum Students Taking Exam&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-students-taking-exam">Maximum Students Taking Exam</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-students-taking-exam/discuss/503558/python-15-line-simple-dp-using-yield-with-explanation">Solution</a></p>
+<p><strong>Idea</strong><br><br>Starting from row 0, we enumerate all the possible combination of seats arrangements.<br><br>Given a seats arrangement of row <code>n</code>, we can enumerate all the possible seats arrangement of row <code>n+1</code>.</p>
+<p><strong>Function <code>combination_row</code> Explanation</strong></p>
+<li>Inputs:
+<ul>
+- `i`: the index of row
+- `end`: the index of seat at row i under consideration
+- `prev`: the arrangement before the current seat, represented with string. E.g. '.#.'
+- `count`: the number of students seated to the left of the current position
+- `front`: the seat arrangement of the previous row
+
+<ul>
+<li>a seat arrangements at row i</li>
+<li>the corresponding number of students seated at row i</li>
+</ul>
+<p><strong>Complexity</strong><br><br>Worst Case Time Complexity: <code>O(2^m * n)</code> (performances are much better on average cases)<br><br>Worst Case Space Complexity: <code>O(2^m)</code> (performances are much better on average cases)</p>
+<p><strong>Python3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def maxStudents(self, seats):</span><br><span class="line">        m, n &#x3D; len(seats), len(seats[0])</span><br><span class="line">        </span><br><span class="line">        def combination_row(i, end&#x3D;0, prev&#x3D;&#39;&#39;, count&#x3D;0, front&#x3D;None):</span><br><span class="line">            if end &gt;&#x3D; n:</span><br><span class="line">                yield prev, count; return</span><br><span class="line">            elif seats[i][end] &#x3D;&#x3D; &#39;.&#39; and \</span><br><span class="line">                    (not prev or prev[-1] &#x3D;&#x3D; &#39;#&#39;) and \</span><br><span class="line">                    (end &#x3D;&#x3D; 0 or front[end-1] &#x3D;&#x3D; &#39;#&#39;) and \</span><br><span class="line">                    (end &#x3D;&#x3D; n-1 or front[end+1] &#x3D;&#x3D; &#39;#&#39;):</span><br><span class="line">                yield from combination_row(i, end+1, prev+&#39;.&#39;, count+1, front)</span><br><span class="line">            yield from combination_row(i, end+1, prev+&#39;#&#39;, count, front)</span><br><span class="line">                            </span><br><span class="line">        new_dp &#x3D; &#123;&#39;#&#39;*n:0&#125; # base case: a dummy row at the very front, with all seats broken</span><br><span class="line">        for i in range(m):</span><br><span class="line">            dp, new_dp &#x3D; new_dp, &#123;&#125;</span><br><span class="line">            for p,sm in dp.items():</span><br><span class="line">                for k,v in combination_row(i, front&#x3D;p):</span><br><span class="line">                    new_dp[k] &#x3D; max(v+sm, new_dp.get(k, 0))</span><br><span class="line">        return max(new_dp.values())</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Python3 using reduce (without comment and line break)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line">class Solution:</span><br><span class="line">    def maxStudents(self, seats):</span><br><span class="line">        m, n &#x3D; len(seats), len(seats[0])</span><br><span class="line">        def combination_row(i, end&#x3D;0, prev&#x3D;&#39;&#39;, count&#x3D;0, front&#x3D;None):</span><br><span class="line">            if end &gt;&#x3D; n:</span><br><span class="line">                yield prev, count; return</span><br><span class="line">            elif seats[i][end] &#x3D;&#x3D; &#39;.&#39; and (not prev or prev[-1] &#x3D;&#x3D; &#39;#&#39;) and (end &#x3D;&#x3D; 0 or front[end-1] &#x3D;&#x3D; &#39;#&#39;) and (end &#x3D;&#x3D; n-1 or front[end+1] &#x3D;&#x3D; &#39;#&#39;):</span><br><span class="line">                yield from combination_row(i, end+1, prev+&#39;.&#39;, count+1, front)</span><br><span class="line">            yield from combination_row(i, end+1, prev+&#39;#&#39;, count, front)</span><br><span class="line">                            </span><br><span class="line">        dp &#x3D; &#123;&#39;#&#39;*n:0&#125;</span><br><span class="line">        for i in range(m):</span><br><span class="line">            def update(d, k, v): </span><br><span class="line">                d[k] &#x3D; max(d.get(k, 0), v)</span><br><span class="line">                return d</span><br><span class="line">            dp &#x3D; reduce(lambda x,pair:update(x,*pair), (k,v+sm) for p,sm in dp.items() for k,v in combination_row(i, front&#x3D;p)), &#123;&#125;)</span><br><span class="line">        return max(dp.values()) </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/02/09/maximum-students-taking-exam/" data-id="cke3xyks0000a4ilu3nmn2qz8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jump-game-iv" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/02/09/jump-game-iv/" class="article-date">
+  <time datetime="2020-02-09T00:06:00.000Z" itemprop="datePublished">2020-02-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/02/09/jump-game-iv/">Jump Game Iv&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/jump-game-iv">Jump Game Iv</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/jump-game-iv/discuss/502711/Python-Simple-Solution-with-Explanations">Solution</a></p>
+<p><strong>Idea</strong><br><br>Start from position 0. Use breadth first search until the last position is found.</p>
+<p><strong>Trick</strong></p>
+<ol>
+<li>Track all the values we have explored. For a given value, we only add it to the frontier once</li>
+<li>Track all the positions we have explored.</li>
+<li>Python trick: <code>nei[num] * (num not in num_met)</code></li>
+</ol>
+<p><strong>Complexity</strong><br><br>Time: <code>O(N)</code><br><br>Space: <code>O(N)</code></p>
+<p><strong>Python 3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">def minJumps(self, arr):</span><br><span class="line">    nei &#x3D; collections.defaultdict(list)</span><br><span class="line">    _ &#x3D; [nei[x].append(i) for i, x in enumerate(arr)]</span><br><span class="line"></span><br><span class="line">    frontier &#x3D; collections.deque([(0,0)])</span><br><span class="line">    num_met, pos_met &#x3D; set(), set()</span><br><span class="line">    while frontier:</span><br><span class="line">        pos, step &#x3D; frontier.popleft() # state: position, step</span><br><span class="line">        if pos &#x3D;&#x3D; len(arr) - 1: return step</span><br><span class="line">        num &#x3D; arr[pos]</span><br><span class="line">        pos_met.add(pos) # track explored positions</span><br><span class="line"></span><br><span class="line">        for p in [pos - 1, pos + 1] + nei[num] * (num not in num_met):</span><br><span class="line">            if p in pos_met or not 0 &lt;&#x3D; p &lt; len(arr): continue</span><br><span class="line">            frontier.append((p, step + 1))</span><br><span class="line"></span><br><span class="line">        num_met.add(num) # track explored values</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/02/09/jump-game-iv/" data-id="cke3z6qqw000fz4hkh8qjh4kn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-minimum-number-of-taps-to-open-to-water-a-garden" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/01/19/minimum-number-of-taps-to-open-to-water-a-garden/" class="article-date">
+  <time datetime="2020-01-19T14:08:00.000Z" itemprop="datePublished">2020-01-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/01/19/minimum-number-of-taps-to-open-to-water-a-garden/">Minimum Number Of Taps To Open To Water A Garden&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden">Minimum Number Of Taps To Open To Water A Garden</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/discuss/484272/python-o1-memory-on-time-greedy-with-explanation-132ms-beats-100">Solution</a></p>
+<p><strong>Constant Space! O(n) Greedy Approuch (AC: 132ms beats 100%)</strong><br><br>This question is very similar to <a target="_blank" rel="noopener" href="https://leetcode.com/problems/jump-game-ii/">Jump Game II</a>.</p>
+<ol>
+<li>Inplace modify <code>ranges</code> so that each element represents the furthest index you can reach by taking one jump.</li>
+<li>Find the minimal jump you need to reach the end.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def minTaps(self, n: int, ranges: List[int]) -&gt; int:</span><br><span class="line">        for i,r in enumerate(ranges):</span><br><span class="line">            l &#x3D; max(0,i-r)</span><br><span class="line">            ranges[l] &#x3D; max(i+r, ranges[l])</span><br><span class="line">            </span><br><span class="line">        res &#x3D; lo &#x3D; hi &#x3D; 0            </span><br><span class="line">        while hi &lt; n:</span><br><span class="line">            lo, hi &#x3D; hi, max(ranges[lo:hi+1])</span><br><span class="line">            if hi &#x3D;&#x3D; lo: return -1</span><br><span class="line">            res +&#x3D; 1</span><br><span class="line">        return res  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>O(nlogn) Greedy Approuch (AC: 175ms)</strong></p>
+<ol>
+<li>Convert <code>ranges</code> in the format of <code>[(l0,r0), (l1,r1)...]</code>, where <code>li,ri</code> represents the left boundary and right boundary of a tap. O(n)</li>
+<li>Sort the taps. O(nlogn)</li>
+<li>Select taps greedily. We select the one that can reach the furthest among those whose left boundary overlaps with the current furthest point.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def minTaps(self, n: int, ranges: List[int]) -&gt; int:</span><br><span class="line">        taps &#x3D; sorted([(max(p-r,0), min(p+r,n)) for p, r in enumerate(ranges)])</span><br><span class="line">        </span><br><span class="line">        new_furthest &#x3D; furthest &#x3D; ind &#x3D; 0</span><br><span class="line">        for res in range(1,n+1):</span><br><span class="line">            for i,(l,r) in enumerate(taps[ind:],ind):</span><br><span class="line">                if l &gt; furthest: break</span><br><span class="line">                new_furthest &#x3D; max(new_furthest, r)</span><br><span class="line">            ind &#x3D; i                </span><br><span class="line">                </span><br><span class="line">            if new_furthest &#x3D;&#x3D; furthest and new_furthest !&#x3D; n: return -1</span><br><span class="line">            if new_furthest &#x3D;&#x3D; n: return res</span><br><span class="line">            furthest &#x3D; new_furthest</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/01/19/minimum-number-of-taps-to-open-to-water-a-garden/" data-id="cke3xyks2000d4ilu5ul3a3ly" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-minimum-distance-to-type-a-word-using-two-fingers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/01/13/minimum-distance-to-type-a-word-using-two-fingers/" class="article-date">
+  <time datetime="2020-01-13T19:46:00.000Z" itemprop="datePublished">2020-01-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/01/13/minimum-distance-to-type-a-word-using-two-fingers/">Minimum Distance To Type A Word Using Two Fingers&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-distance-to-type-a-word-using-two-fingers">Minimum Distance To Type A Word Using Two Fingers</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-distance-to-type-a-word-using-two-fingers/discuss/477684/Python-simple-DP-with-explanation-(270-ms-beats-100)">Solution</a></p>
+<p><strong>Base case</strong>: When there is only 1 character to type, we only use 1 finger.</p>
+<p>For <strong>new case n</strong>, we expand each case n-1 with 2 possibilities</p>
+<ul>
+<li>type the new character using finger 1<li>type the new character using finger 2
+<ul></li>
+<li>if finger 2 is free, no additional distance is added</li>
+</ul>
+<p><strong>We can further improve the performance</strong></p>
+<ul>
+<li>there are only 26 possible finger positions.</li>
+<li>there are only 26*26 different combinations of finger movements</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from functools import lru_cache</span><br><span class="line">class Solution:</span><br><span class="line">    def minimumDistance(self, A):</span><br><span class="line">        </span><br><span class="line">        @lru_cache(maxsize&#x3D;None)</span><br><span class="line">        def get_distance(current_pos, next_pos):</span><br><span class="line">            if current_pos &#x3D;&#x3D; -1: return 0</span><br><span class="line">            return abs(current_pos &#x2F;&#x2F; 6 - next_pos &#x2F;&#x2F; 6) + abs(current_pos % 6 - next_pos % 6)</span><br><span class="line">        </span><br><span class="line">        @lru_cache(maxsize&#x3D;None)</span><br><span class="line">        def to_num(c):</span><br><span class="line">            return ord(c) - ord(&#39;A&#39;)</span><br><span class="line"></span><br><span class="line">        # key: (i,j) i is the position of the first finger, j is the positino of the second finger</span><br><span class="line">        dp &#x3D; &#123;(to_num(A[0]), -1): 0&#125; # base case, -1 means the second finger is free</span><br><span class="line">        for n in [to_num(c) for c in A[1:]]:</span><br><span class="line">            new_dp &#x3D; &#123;&#125;</span><br><span class="line">            for (f1, f2), d in dp.items():</span><br><span class="line">                new_dp[n, f2] &#x3D; min(new_dp.get((n, f2), math.inf), d + get_distance(f1, n))</span><br><span class="line">                new_dp[f1, n] &#x3D; min(new_dp.get((f1, n), math.inf), d + get_distance(f2, n))</span><br><span class="line">            dp &#x3D; new_dp</span><br><span class="line">            </span><br><span class="line">        return min(dp.values())</span><br><span class="line">        # AC: 270 ms</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/01/13/minimum-distance-to-type-a-word-using-two-fingers/" data-id="cke3xyks0000b4iluda9cgzil" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-find-in-mountain-array" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/06/23/find-in-mountain-array/" class="article-date">
+  <time datetime="2019-06-23T12:27:00.000Z" itemprop="datePublished">2019-06-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/06/23/find-in-mountain-array/">Find In Mountain Array&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/find-in-mountain-array">Find In Mountain Array</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/find-in-mountain-array/discuss/317672/Python-32ms-intuitive-high-performance-solution">Solution</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def findInMountainArray(self, target: int, ma: &#39;MountainArray&#39;) -&gt; int:</span><br><span class="line">        self.d, self.ma, L &#x3D; &#123;&#125;, ma, ma.length()</span><br><span class="line">        </span><br><span class="line">        mxi &#x3D; self.findmaxindex(0, L-1)</span><br><span class="line">        if self.ma.get(mxi) &lt; target: return -1</span><br><span class="line">        </span><br><span class="line">        # results in the ascending phase</span><br><span class="line">        ans1 &#x3D; self.query(0,mxi,target)</span><br><span class="line">        # results in the descending phase</span><br><span class="line">        ans2 &#x3D; self.query(mxi+1,L-1,target, up&#x3D;False)</span><br><span class="line">        </span><br><span class="line">        ans &#x3D; min(ans1,ans2)</span><br><span class="line">        return ans if ans !&#x3D; math.inf else -1</span><br><span class="line">        </span><br><span class="line">    def query(self, l, r, t, up&#x3D;True):        </span><br><span class="line">        # use binary search to find the appropriate index</span><br><span class="line">        while l&lt;r:</span><br><span class="line">            m &#x3D; (l+r+1)&#x2F;&#x2F;2</span><br><span class="line">            if t &#x3D;&#x3D; self.ma.get(m):</span><br><span class="line">                return m</span><br><span class="line">            </span><br><span class="line">            if self.ma.get(m) &lt; t:</span><br><span class="line">                if up: l &#x3D; m</span><br><span class="line">                else: r &#x3D; m-1</span><br><span class="line">            else:                </span><br><span class="line">                if not up: l &#x3D; m</span><br><span class="line">                else: r &#x3D; m-1</span><br><span class="line">                    </span><br><span class="line">        return l if self.ma.get(l) &#x3D;&#x3D; t else math.inf</span><br><span class="line">        </span><br><span class="line">    def findmaxindex(self, l, r):</span><br><span class="line">        # use binary search to find the appropriate index</span><br><span class="line">        if l&#x3D;&#x3D;r: return l</span><br><span class="line">        cur &#x3D; (l+r+1)&#x2F;&#x2F;2</span><br><span class="line">        return self.findmaxindex(l, cur-1) if self.ma.get(cur) &lt; self.ma.get(cur-1) else self.findmaxindex(cur, r)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2019/06/23/find-in-mountain-array/" data-id="cke3z6qqs0006z4hk05fd3z95" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-grumpy-bookstore-owner" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/05/29/grumpy-bookstore-owner/" class="article-date">
+  <time datetime="2019-05-29T11:00:00.000Z" itemprop="datePublished">2019-05-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/05/29/grumpy-bookstore-owner/">Grumpy Bookstore Owner&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/grumpy-bookstore-owner">Grumpy Bookstore Owner</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/grumpy-bookstore-owner/discuss/300164/python-beat-99-5-line-intuitive-solution-constant-space">Solution</a></p>
+<p>A more readable version:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def maxSatisfied(self, customers, grumpy, X):</span><br><span class="line">        effect, maxe, maxi &#x3D; 0, 0, -1</span><br><span class="line">        </span><br><span class="line">        for i, g in enumerate(grumpy[X:]):</span><br><span class="line">            if g &#x3D;&#x3D; 1:</span><br><span class="line">                effect +&#x3D; customers[i+X]</span><br><span class="line">            if grumpy[i] &#x3D;&#x3D; 1:</span><br><span class="line">                effect -&#x3D; customers[i]</span><br><span class="line">            if maxe &lt; effect:</span><br><span class="line">                maxe &#x3D; effect</span><br><span class="line">                maxi &#x3D; i</span><br><span class="line">                </span><br><span class="line">        return sum(x for i,x in enumerate(customers) if grumpy[i] &#x3D;&#x3D; 0 or (i &gt; maxi and i &lt;&#x3D; maxi+X))    </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>The five-line version:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def maxSatisfied(self, customers: List[int], grumpy: List[int], X: int) -&gt; int:</span><br><span class="line">        effect, maxe, maxi &#x3D; 0, 0, -1</span><br><span class="line">        for i,g in enumerate(grumpy[X:]):</span><br><span class="line">            effect +&#x3D; (customers[i+X] if g&#x3D;&#x3D;1 else 0) + (-customers[i] if grumpy[i]&#x3D;&#x3D;1 else 0)</span><br><span class="line">            if maxe &lt; effect: maxe, maxi &#x3D; effect, i</span><br><span class="line">        return sum(x for i,x in enumerate(customers) if grumpy[i] &#x3D;&#x3D; 0 or (i &gt; maxi and i &lt;&#x3D; maxi+X))                </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2019/05/29/grumpy-bookstore-owner/" data-id="cke3z6qqv000cz4hkhazy1vix" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-remove-all-adjacent-duplicates-in-string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/05/20/remove-all-adjacent-duplicates-in-string/" class="article-date">
+  <time datetime="2019-05-20T10:25:00.000Z" itemprop="datePublished">2019-05-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/05/20/remove-all-adjacent-duplicates-in-string/">Remove All Adjacent Duplicates In String&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string">Remove All Adjacent Duplicates In String</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/discuss/295660/python-on-linked-list-solution">Solution</a></p>
+<p>Notes:</p>
+<ul>
+<li>Explicitly Breaking the object reference circle in the doubly linked list improves the memory usage by around 4 MB.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">class ListNode:</span><br><span class="line">    __slots__ &#x3D; &#39;val next prev&#39;.split()</span><br><span class="line">    def __init__(self, x):</span><br><span class="line">        self.val &#x3D; x</span><br><span class="line">        self.next &#x3D; None</span><br><span class="line">        self.prev &#x3D; None</span><br><span class="line"></span><br><span class="line">class Solution:</span><br><span class="line">    def removeDuplicates(self, S: str) -&gt; str:</span><br><span class="line">        self.root &#x3D; ll &#x3D; self.list_to_ll(S)</span><br><span class="line">        while True:</span><br><span class="line">            if not ll or not ll.next or not ll.next.next: break</span><br><span class="line">            if ll.next.val &#x3D;&#x3D; ll.next.next.val:</span><br><span class="line">                ll.next.next.prev &#x3D; None # break the hanging nodes, should have used a weak ref</span><br><span class="line">                ll.next &#x3D; ll.next.next.next</span><br><span class="line">                if ll.next:</span><br><span class="line">                    ll.next.prev &#x3D; ll</span><br><span class="line">                ll &#x3D; ll.prev or ll</span><br><span class="line">            else: </span><br><span class="line">                ll &#x3D; ll.next</span><br><span class="line">        return self.ll_to_s(self.root)</span><br><span class="line">    </span><br><span class="line">    def ll_to_s(self, ll):</span><br><span class="line">        res &#x3D; &#39;&#39;</span><br><span class="line">        while ll:</span><br><span class="line">            res +&#x3D; ll.val</span><br><span class="line">            ll &#x3D; ll.next</span><br><span class="line">        return res            </span><br><span class="line">        </span><br><span class="line">    def list_to_ll(self,l):</span><br><span class="line">        cur &#x3D; dummy &#x3D; ListNode(&#39;&#39;)</span><br><span class="line">        for x in l:</span><br><span class="line">            last &#x3D; cur</span><br><span class="line">            cur.next &#x3D; cur &#x3D; ListNode(x)</span><br><span class="line">            cur.prev &#x3D; last</span><br><span class="line">        return dummy</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2019/05/20/remove-all-adjacent-duplicates-in-string/" data-id="cke3xyks6000i4ilucn0yagi1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-robot-bounded-in-circle" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/05/16/robot-bounded-in-circle/" class="article-date">
+  <time datetime="2019-05-16T10:03:00.000Z" itemprop="datePublished">2019-05-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/05/16/robot-bounded-in-circle/">Robot Bounded In Circle&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/robot-bounded-in-circle">Robot Bounded In Circle</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/robot-bounded-in-circle/discuss/293120/python-on-6-line-solution-beats-100">Solution</a></p>
+<p>Tricks:</p>
+<ul>
+<li>Complex number suits this question well.</li>
+<li>Combinations like “LLLL”, “RRRR”, “RL”, “LR” does not have any effect, removing these combinations are considered very efficient in python, which will lead to a ~15% performance gain.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def isRobotBounded(self, ins: str) -&gt; bool:</span><br><span class="line">        ins &#x3D; ins.replace(&#39;LLLL&#39;, &#39;&#39;).replace(&#39;RRRR&#39;, &#39;&#39;).replace(&#39;RL&#39;, &#39;&#39;).replace(&#39;LR&#39;, &#39;&#39;)</span><br><span class="line">        d, p &#x3D; 1, 0</span><br><span class="line">        for c in ins:</span><br><span class="line">            if c &#x3D;&#x3D; &#39;G&#39;: p +&#x3D; d</span><br><span class="line">            else: d *&#x3D; &#123;&#39;L&#39;:1j, &#39;R&#39;:-1j&#125;[c]</span><br><span class="line">        return d.real &#x3D;&#x3D; 0 or p &#x3D;&#x3D; 0 or d.real &lt; 0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2019/05/16/robot-bounded-in-circle/" data-id="cke3xyks6000j4ilu3v3e6cv3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/blog/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Leetcode/">Leetcode</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Algorithm/" style="font-size: 10px;">Algorithm</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/05/">May 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/08/21/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/29/minimum-number-of-increments-on-subarrays-to-form-a-target-array/">Minimum Number Of Increments On Subarrays To Form A Target Array&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/26/number-of-good-ways-to-split-a-string/">Number Of Good Ways To Split A String&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/">Number Of Sub Arrays With Odd Sum&#39;s Solution</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Cheng Yanru<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

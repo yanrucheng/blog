@@ -64,10 +64,83 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-pizza-with-3n-slices" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/08/21/pizza-with-3n-slices/" class="article-date">
+  <time datetime="2020-08-21T11:06:22.999Z" itemprop="datePublished">2020-08-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/pizza-with-3n-slices">Pizza With 3N Slices</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/pizza-with-3n-slices/discuss/546442/PythonC%2B%2B-O(n)-space-Easy-DP-with-explanation">Solution</a></p>
+<p><strong>Idea</strong><br><br>We first divide the problem into 2 sub-problem. (since we cannot have slice 0 and slice n at the same time)</p>
+<ol>
+<li>we choose from pizza [0, …, n-1] as a linear pizza instead of a circular pizza</li>
+<li>we choose from pizza [1, …, n] as a linear pizza instead of a circular pizza</li>
+</ol>
+<p>We then track the maximum amount we ate after eating the ith pizza we have in <code>eat</code>. There are only 2 possibilities as follows.</p>
+<ol>
+<li>largest value when encountering the previous slice</li>
+<li>current slice + largest value when encountering last second slice</li>
+</ol>
+<p><strong>Similar Questoins</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://https//leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/">188. Best Time to Buy and Sell Stock IV</a></li>
+<li><a target="_blank" rel="noopener" href="http://https//leetcode.com/problems/house-robber-ii/">213. House Robber II</a></li>
+</ul>
+<p><strong>Complexity</strong><br><br>Time: <code>O(n^2)</code><br><br>Space: <code>O(n)</code></p>
+<p><strong>Python 3, O(n^2) space and time</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def maxSizeSlices(self, slices: List[int]) -&gt; int:</span><br><span class="line">        n &#x3D; len(slices) &#x2F;&#x2F; 3</span><br><span class="line">        def linear(arr):</span><br><span class="line">            eat &#x3D; [[0] + [-math.inf]*n] * 2</span><br><span class="line">            for x in arr:</span><br><span class="line">                eat.append([i and max(eat[-1][i], eat[-2][i-1]+x) for i in range(n+1)])</span><br><span class="line">            return max(l[n] for l in eat)</span><br><span class="line">        return max(linear(slices[1:]), linear(slices[:-1]))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Python 3, O(n) space</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def maxSizeSlices(self, slices: List[int]) -&gt; int:</span><br><span class="line">        n &#x3D; len(slices) &#x2F;&#x2F; 3</span><br><span class="line">        def linear(arr):</span><br><span class="line">            eat &#x3D; collections.deque([[0] + [-math.inf]*n] * 2)</span><br><span class="line">            res &#x3D; 0</span><br><span class="line">            for x in arr:</span><br><span class="line">                eat +&#x3D; [i and max(eat[-1][i], eat[-2][i-1]+x) for i in range(n+1)],</span><br><span class="line">                eat.popleft()</span><br><span class="line">                res &#x3D; max(res, eat[-1][n])</span><br><span class="line">            return res</span><br><span class="line">        return max(linear(slices[1:]), linear(slices[:-1]))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>C++</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maxSizeSlices(vector&lt;int&gt;&amp; slices) &#123;</span><br><span class="line">        int n &#x3D; (int)slices.size() &#x2F; 3;</span><br><span class="line">        auto l1 &#x3D; vector&lt;int&gt;(slices.begin(), slices.end()-1);</span><br><span class="line">        auto l2 &#x3D; vector&lt;int&gt;(slices.begin()+1, slices.end());</span><br><span class="line">        return max(linear(l1, n), linear(l2, n));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">private:</span><br><span class="line">    int linear(vector&lt;int&gt;&amp; slices, int n) &#123;</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; eat((int)slices.size()+2, vector&lt;int&gt;(n+1, INT_MIN));</span><br><span class="line">        int res &#x3D; INT_MIN;</span><br><span class="line">        for (int i&#x3D;0; i&lt;eat.size(); ++i) eat[i][0] &#x3D; 0;</span><br><span class="line">        for (int i&#x3D;2; i&lt;eat.size(); ++i) &#123;</span><br><span class="line">            for (int j&#x3D;1; j&lt;n+1; ++j)</span><br><span class="line">                eat[i][j] &#x3D; max(eat[i-1][j], eat[i-2][j-1] + slices[i-2]);</span><br><span class="line">            res &#x3D; max(eat[i][n], res);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/08/21/pizza-with-3n-slices/" data-id="cke3xyks5000h4ilu1yj83ump" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/08/21/hello-world/" class="article-date">
-  <time datetime="2020-08-21T07:55:13.268Z" itemprop="datePublished">2020-08-21</time>
+  <time datetime="2020-08-21T07:32:37.468Z" itemprop="datePublished">2020-08-21</time>
 </a>
     
   </div>
@@ -103,7 +176,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/08/21/hello-world/" data-id="cke3xvfum0000i8hidaqm86pd" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/08/21/hello-world/" data-id="cke3xykrx00064ilucbh1eram" class="article-share-link">Share</a>
       
       
     </footer>
@@ -113,25 +186,492 @@
 
 
   
+    <article id="post-minimum-number-of-increments-on-subarrays-to-form-a-target-array" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/29/minimum-number-of-increments-on-subarrays-to-form-a-target-array/" class="article-date">
+  <time datetime="2020-07-29T22:56:00.000Z" itemprop="datePublished">2020-07-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
 
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/29/minimum-number-of-increments-on-subarrays-to-form-a-target-array/">Minimum Number Of Increments On Subarrays To Form A Target Array&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-number-of-increments-on-subarrays-to-form-a-target-array">Minimum Number Of Increments On Subarrays To Form A Target Array</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-number-of-increments-on-subarrays-to-form-a-target-array/discuss/754630/C%2B%2BPython-1-line-Greedy-Solution">Solution</a></p>
+<p><strong>Idea</strong><br><br>Traversing through the array is like travelling through a collection of mountains.<br><br>Whenever we are going downwards, we have to remove the peak we’ve passed.<br><br>It is obvious that a single peak of height <code>h</code> can be taken down with <code>h</code> movements.</p>
+<p>Please upvote if you find this post helpful or interesting. It means a lot to me. Thx~</p>
+<p><strong>Complexity</strong></p>
+<ul>
+<li>Time: <code>O(n)</code></li>
+<li>Space: Constant</li>
+</ul>
+<p><strong>Python</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def minNumberOperations(self, target: List[int]) -&gt; int:</span><br><span class="line">        return sum(max(target[i - 1] - target[i], 0) for i in range(1, len(target))) + target[-1]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>C++</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int minNumberOperations(vector&lt;int&gt;&amp; target) &#123;</span><br><span class="line">        int res &#x3D; 0;</span><br><span class="line">        vector&lt;int&gt; increase;</span><br><span class="line">        target.push_back(0);</span><br><span class="line">        for (auto x: target)&#123;</span><br><span class="line">            if (!increase.empty() &amp;&amp; increase.back() &gt; x)</span><br><span class="line">                res +&#x3D; increase.back() - x;</span><br><span class="line">            while (!increase.empty() &amp;&amp; increase.back() &gt;&#x3D; x)</span><br><span class="line">                increase.pop_back();</span><br><span class="line">            increase.push_back(x);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/07/29/minimum-number-of-increments-on-subarrays-to-form-a-target-array/" data-id="cke3xyks2000c4ilu6pnlb62s" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-number-of-good-ways-to-split-a-string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/26/number-of-good-ways-to-split-a-string/" class="article-date">
+  <time datetime="2020-07-26T00:14:00.000Z" itemprop="datePublished">2020-07-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/26/number-of-good-ways-to-split-a-string/">Number Of Good Ways To Split A String&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/number-of-good-ways-to-split-a-string">Number Of Good Ways To Split A String</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/number-of-good-ways-to-split-a-string/discuss/754660/C%2B%2BPython-8-line-constant-space-simple-solution">Solution</a></p>
+<p>Please upvote if you find this post helpful or interesting. It means a lot to me. Thx~</p>
+<p><strong>Complexity</strong></p>
+<ul>
+<li>Time: <code>O(n)</code></li>
+<li>Space: <code>O(26) = O(1)</code></li>
+</ul>
+<p><strong>Python</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def numSplits(self, s: str) -&gt; int:</span><br><span class="line">        p, total &#x3D; set(), collections.Counter(s)</span><br><span class="line">        res, total_cnt &#x3D; 0, len(total)</span><br><span class="line">        for i, x in enumerate(s[::-1]):</span><br><span class="line">            p.add(x)</span><br><span class="line">            total[x] -&#x3D; 1</span><br><span class="line">            total_cnt -&#x3D; not total[x]</span><br><span class="line">            res +&#x3D; len(p) &#x3D;&#x3D; total_cnt</span><br><span class="line">        return res    </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>C++</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int numSplits(string s) &#123;</span><br><span class="line">        map&lt;char, int&gt; total;</span><br><span class="line">        for (auto c: s) total[c]++;</span><br><span class="line">        int total_size &#x3D; (int)total.size(), res &#x3D; 0;</span><br><span class="line">        set&lt;char&gt; p;</span><br><span class="line">        for (auto c: s) &#123;</span><br><span class="line">            p.insert(c);</span><br><span class="line">            total[c]--;</span><br><span class="line">            total_size -&#x3D; !total[c];</span><br><span class="line">            res +&#x3D; (total_size &#x3D;&#x3D; p.size());</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/07/26/number-of-good-ways-to-split-a-string/" data-id="cke3z6qrb0016z4hk3akwg7gm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-number-of-sub-arrays-with-odd-sum" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/" class="article-date">
+  <time datetime="2020-07-26T00:11:00.000Z" itemprop="datePublished">2020-07-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/">Number Of Sub Arrays With Odd Sum&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/number-of-sub-arrays-with-odd-sum">Number Of Sub Arrays With Odd Sum</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/number-of-sub-arrays-with-odd-sum/discuss/754721/C%2B%2BPython-7-line-Intuitive-Constant-Space-DP">Solution</a></p>
+<p><strong>Idea</strong><br><br>This is an elementary dynamic programming problem.<br><br><code>odd[i]</code> records the number of subarray ending at <code>arr[i]</code> that has odd sum.<br><br><code>even[i]</code> records the number of subarray ending at <code>arr[i]</code> that has even sum.<br><br>if arr[i + 1] is odd, <code>odd[i + 1] = even[i] + 1</code> and <code>even[i + 1] = odd[i]</code><br><br>if arr[i + 1] is even, <code>odd[i + 1] = odd[i]</code> and <code>even[i + 1] = even[i] + 1</code><br><br>Since we only required the previous value in <code>odd</code> and <code>even</code>, we only need <code>O(1)</code> space.</p>
+<p>Please upvote if you find this post helpful or interesting. It means a lot to me. Thx~</p>
+<p><strong>Complexity</strong></p>
+<ul>
+<li>Time: <code>O(n)</code></li>
+<li>Space: <code>O(1)</code></li>
+</ul>
+<p><strong>Python</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def numOfSubarrays(self, arr: List[int]) -&gt; int:</span><br><span class="line">        res &#x3D; odd &#x3D; even &#x3D; 0</span><br><span class="line">        for x in arr:</span><br><span class="line">            even +&#x3D; 1</span><br><span class="line">            if x % 2:</span><br><span class="line">                odd, even &#x3D; even, odd</span><br><span class="line">            res &#x3D; (res + odd) % 1000000007             </span><br><span class="line">        return res            </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>C++</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int numOfSubarrays(vector&lt;int&gt;&amp; arr) &#123;</span><br><span class="line">        int res &#x3D; 0, odd &#x3D; 0, even &#x3D; 0;</span><br><span class="line">        for (auto x: arr) &#123;</span><br><span class="line">            even +&#x3D; 1;</span><br><span class="line">            if (x % 2)</span><br><span class="line">                swap(odd, even);</span><br><span class="line">            res &#x3D; (res + odd) % 1000000007;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/" data-id="cke3xyks4000f4ilu5zcf304k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-find-a-value-of-a-mysterious-function-closest-to-target" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/25/find-a-value-of-a-mysterious-function-closest-to-target/" class="article-date">
+  <time datetime="2020-07-25T10:47:00.000Z" itemprop="datePublished">2020-07-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/25/find-a-value-of-a-mysterious-function-closest-to-target/">Find A Value Of A Mysterious Function Closest To Target&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/find-a-value-of-a-mysterious-function-closest-to-target">Find A Value Of A Mysterious Function Closest To Target</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/find-a-value-of-a-mysterious-function-closest-to-target/discuss/743142/on2-simple-brute-force-solution">Solution</a></p>
+<p><strong>Idea</strong><br><br>The idea is that &amp; operation will only makes a number smaller. For most cases, <code>arr[i]</code> loses at least 1 bit, and let <code>arr[i]</code> drop to zero in O(log(arr[i])) steps.</p>
+<p><strong>Complexity</strong><br><br>Time: O(n^2), but perform very much like O(nlogK) for the above reasons, where K = max(arr).<br><br>Space: O(1)</p>
+<p>Please leave an upvote if it helps, they mean a lot to me.</p>
+<p><strong>Python</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def closestToTarget(self, arr: List[int], target: int) -&gt; int:</span><br><span class="line">        res &#x3D; math.inf</span><br><span class="line">        </span><br><span class="line">        for i, x in enumerate(arr):</span><br><span class="line">            curr &#x3D; x</span><br><span class="line">            diff &#x3D; abs(target - curr)</span><br><span class="line">            for j in range(i + 1, len(arr)):</span><br><span class="line">                x_ &#x3D; arr[j]</span><br><span class="line">                curr &amp;&#x3D; x_</span><br><span class="line">                if abs(curr - target) &gt;&#x3D; diff:                    </span><br><span class="line">                    break</span><br><span class="line">                diff &#x3D; abs(curr - target)</span><br><span class="line">            res &#x3D; min(res, diff)</span><br><span class="line">                </span><br><span class="line">        return res</span><br><span class="line">                </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/07/25/find-a-value-of-a-mysterious-function-closest-to-target/" data-id="cke3xykrv00034ilugkql7qrf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-maximum-number-of-non-overlapping-substrings" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/19/maximum-number-of-non-overlapping-substrings/" class="article-date">
+  <time datetime="2020-07-19T12:18:00.000Z" itemprop="datePublished">2020-07-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/19/maximum-number-of-non-overlapping-substrings/">Maximum Number Of Non Overlapping Substrings&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-number-of-non-overlapping-substrings">Maximum Number Of Non Overlapping Substrings</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/maximum-number-of-non-overlapping-substrings/discuss/743166/O(n)-set-solution">Solution</a></p>
+<p><strong>Idea</strong><br><br>The idea is that we compute a “feature value” for s[0..i] for every i within [0..n-1], we then stores them in a set for quick query.</p>
+<p><strong>Complexity</strong><br><br>Time: O(n)<br><br>Space: O(n)</p>
+<p><strong>Python</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def maxNumOfSubstrings(self, s: str) -&gt; List[str]:</span><br><span class="line">        cnt &#x3D; collections.Counter(s)</span><br><span class="line">        feat &#x3D; [0] * 26</span><br><span class="line">        seen &#x3D; &#123;(0,) * 26: 0&#125;</span><br><span class="line">        order &#x3D; []</span><br><span class="line">        full &#x3D; [cnt[c] for c in string.ascii_lowercase]</span><br><span class="line">        ans &#x3D; []</span><br><span class="line">        </span><br><span class="line">        for i, c in enumerate(s):</span><br><span class="line">            if c not in order: order.append(c)</span><br><span class="line">            feat[ord(c) - ord(&#39;a&#39;)] +&#x3D; 1                </span><br><span class="line">            tmp &#x3D; feat[:]</span><br><span class="line">            for x in order[::-1]:</span><br><span class="line">                if tmp[ord(x) - ord(&#39;a&#39;)] &lt; full[ord(x) - ord(&#39;a&#39;)]:</span><br><span class="line">                    break</span><br><span class="line">                tmp[ord(x) - ord(&#39;a&#39;)] &#x3D; 0</span><br><span class="line">                if tuple(tmp) in seen:</span><br><span class="line">                    ans.append(s[seen[tuple(tmp)]: i + 1])</span><br><span class="line">                    seen &#x3D; &#123;(0) * 26: 0&#125;</span><br><span class="line">                    order &#x3D; []</span><br><span class="line">            seen[tuple(feat)] &#x3D; i + 1</span><br><span class="line">        return ans</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/07/19/maximum-number-of-non-overlapping-substrings/" data-id="cke3xykrz00094ilu3476hks1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/07/05/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits/" class="article-date">
+  <time datetime="2020-07-05T12:03:00.000Z" itemprop="datePublished">2020-07-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/07/05/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits/">Minimum Possible Integer After At Most K Adjacent Swaps On Digits&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits">Minimum Possible Integer After At Most K Adjacent Swaps On Digits</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits/discuss/720127/python-bytedance-interview-question">Solution</a></p>
+<p><strong>Idea</strong><br><br>Greedily select the smallest number we can reach, and push it all the way to the front.</p>
+<p><strong>Complexity</strong></p>
+<ul>
+<li>time: O(n^2)</li>
+<li>space: O(n)</li>
+</ul>
+<p><strong>Python</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def minInteger(self, num: str, k: int) -&gt; str:</span><br><span class="line">        num &#x3D; [*map(int, num)]</span><br><span class="line">        if k &gt;&#x3D; (len(num) ** 2) &#x2F;&#x2F; 2:</span><br><span class="line">            return &#39;&#39;.join(map(str, sorted(num)))</span><br><span class="line">        </span><br><span class="line">        res &#x3D; []</span><br><span class="line">        q &#x3D; [(v, i) for i, v in enumerate(num)]</span><br><span class="line">        while k and q:</span><br><span class="line">            idx, (v, i) &#x3D; min(enumerate(q[:k + 1]), key&#x3D;lambda p:p[1])</span><br><span class="line">            k -&#x3D; idx</span><br><span class="line">            del q[idx]</span><br><span class="line">            res +&#x3D; v,</span><br><span class="line">            </span><br><span class="line">        res +&#x3D; [v for v, _ in q]</span><br><span class="line">        return &#39;&#39;.join(map(str, res))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>Please please don’t downvote unless necessary bro.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/07/05/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits/" data-id="cke3xyks3000e4ilue0ih74l6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-largest-divisible-subset" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/06/13/largest-divisible-subset/" class="article-date">
+  <time datetime="2020-06-13T17:09:00.000Z" itemprop="datePublished">2020-06-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/06/13/largest-divisible-subset/">Largest Divisible Subset&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/largest-divisible-subset">Largest Divisible Subset</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/largest-divisible-subset/discuss/684795/python-onlogn-nsqrtv-beats-100">Solution</a></p>
+<p><strong>Idea</strong><br><br>First, sort the array <code>O(nlogn)</code>.<br><br>We maintain a dictionary <code>d</code> where <code>d[v]</code> records the longest subsequence <strong>ending with v</strong>.<br><br>When encountering a new value <code>v</code>, <code>v</code> can only be appended to those subsequence ending with <code>v</code>‘s factors. Thus, we only needs to iterate through <code>v</code>‘s factors, which is <code>O(sqrt(V))</code></p>
+<p><strong>Complexity</strong></p>
+<ul>
+<li>time: <code>O(nlogn + n*sqrt(V)), where V is the size of number</code></li>
+<li>space: <code>O(VN)</code></li>
+</ul>
+<p><strong>Python3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># factors, O(nlogn + nlogV), V is the size of num in nums</span><br><span class="line">class Solution:</span><br><span class="line">    def largestDivisibleSubset(self, nums: List[int]) -&gt; List[int]:</span><br><span class="line">        def factors(n):</span><br><span class="line">            yield 1</span><br><span class="line">            for i in range(2, int(math.sqrt(n)) + 1):</span><br><span class="line">                if not n % i:</span><br><span class="line">                    yield i</span><br><span class="line">                    if i * i !&#x3D; n:</span><br><span class="line">                        yield n &#x2F;&#x2F; i</span><br><span class="line">                        </span><br><span class="line">        nums.sort()                        </span><br><span class="line">        d &#x3D; &#123;&#125;            </span><br><span class="line">        for n in nums:</span><br><span class="line">            for f in factors(n):</span><br><span class="line">                tmp &#x3D; d.get(f, []) + [n]</span><br><span class="line">                d[n] &#x3D; tmp if len(d.get(n, [])) &lt; len(tmp) else d.get(n, [])</span><br><span class="line">        return nums and max(d.values(), key&#x3D;len)</span><br><span class="line">        # AC: 100 ms, beats 100.00%, 13.9 MB</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/06/13/largest-divisible-subset/" data-id="cke3xykrw00054ilubg7gax7w" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-paint-house-iii" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/06/07/paint-house-iii/" class="article-date">
+  <time datetime="2020-06-07T12:23:00.000Z" itemprop="datePublished">2020-06-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/06/07/paint-house-iii/">Paint House Iii&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/paint-house-iii">Paint House Iii</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/paint-house-iii/discuss/674298/C%2B%2BPython-Simple-DP-top-down-bottom-up">Solution</a></p>
+<p><strong>Complexity</strong><br><br>Time: <code>O(n * n * m * target)</code><br><br>Space: <code>O(n * m * target) (can be optimized to O(n * target))</code></p>
+<p><strong>C++, bottom-up, DP</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int minCost(vector&lt;int&gt;&amp; houses, vector&lt;vector&lt;int&gt;&gt;&amp; cost, int m, int n, int target) &#123;</span><br><span class="line">        int INF &#x3D; 1000000;</span><br><span class="line">        vector&lt;vector&lt;vector&lt;int&gt;&gt;&gt; dp(m, vector&lt;vector&lt;int&gt;&gt;(target + 1, vector&lt;int&gt;(n, INF)));</span><br><span class="line">            </span><br><span class="line">        for (int c &#x3D; 1; c &lt;&#x3D; n; c++)</span><br><span class="line">            if (houses[0] &#x3D;&#x3D; c)</span><br><span class="line">                dp[0][1][c - 1] &#x3D; 0;</span><br><span class="line">            else if (!houses[0])</span><br><span class="line">                dp[0][1][c - 1] &#x3D; cost[0][c - 1];</span><br><span class="line">        </span><br><span class="line">        for (int i &#x3D; 1; i &lt; m; i++)</span><br><span class="line">            for (int k &#x3D; 1; k &lt;&#x3D; min(target, i + 1); k++)</span><br><span class="line">                for (int c &#x3D; 1; c &lt;&#x3D; n; c++) &#123;</span><br><span class="line">                    if (houses[i] &amp;&amp; c !&#x3D; houses[i]) continue;</span><br><span class="line">                    int same_neighbor &#x3D; dp[i - 1][k][c - 1];</span><br><span class="line">                    int diff_neighbor &#x3D; INF;</span><br><span class="line">                    for (int c_ &#x3D; 1; c_ &lt;&#x3D; n; c_++)</span><br><span class="line">                        if (c_ !&#x3D; c)</span><br><span class="line">                            diff_neighbor &#x3D; min(diff_neighbor, dp[i - 1][k - 1][c_ - 1]);</span><br><span class="line">                    int paint_cost &#x3D; cost[i][c - 1] * int(!houses[i]);</span><br><span class="line">                    dp[i][k][c - 1] &#x3D; min(same_neighbor, diff_neighbor) + paint_cost;</span><br><span class="line">                &#125;</span><br><span class="line">        int res &#x3D; *min_element(dp.back().back().begin(), dp.back().back().end());</span><br><span class="line">        return (res &lt; INF) ? res : -1;            </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Python, bottom-up, DP</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def minCost(self, houses: List[int], cost: List[List[int]], m: int, n: int, target: int) -&gt; int:</span><br><span class="line">        # dp[i][c][k]: i means the ith house, c means the cth color, k means k neighbor groups</span><br><span class="line">        dp &#x3D; [[[math.inf for _ in range(n)] for _ in range(target + 1)] for _ in range(m)]</span><br><span class="line">        </span><br><span class="line">        for c in range(1, n + 1):</span><br><span class="line">            if houses[0] &#x3D;&#x3D; c: dp[0][1][c - 1] &#x3D; 0</span><br><span class="line">            elif not houses[0]: dp[0][1][c - 1] &#x3D; cost[0][c - 1]</span><br><span class="line">                </span><br><span class="line">        for i in range(1, m):</span><br><span class="line">            for k in range(1, min(target, i + 1) + 1):</span><br><span class="line">                for c in range(1, n + 1):</span><br><span class="line">                    if houses[i] and c !&#x3D; houses[i]: continue</span><br><span class="line">                    same_neighbor_cost &#x3D; dp[i - 1][k][c - 1]</span><br><span class="line">                    diff_neighbor_cost &#x3D; min([dp[i - 1][k - 1][c_] for c_ in range(n) if c_ !&#x3D; c - 1] or [math.inf])</span><br><span class="line">                    paint_cost &#x3D; cost[i][c - 1] * (not houses[i])</span><br><span class="line">                    dp[i][k][c - 1] &#x3D; min(same_neighbor_cost, diff_neighbor_cost) + paint_cost</span><br><span class="line">        res &#x3D; min(dp[-1][-1])</span><br><span class="line">        return res if res &lt; math.inf else -1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Python, top-down, recursion</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">from functools import lru_cache</span><br><span class="line">class Solution:</span><br><span class="line">    def minCost(self, houses: List[int], cost: List[List[int]], m: int, n: int, target: int) -&gt; int:</span><br><span class="line">        </span><br><span class="line">        @lru_cache(None)</span><br><span class="line">        def helper(i, k, c):</span><br><span class="line">            # min cost for paint the ith house in color c, resulting k neighborhood</span><br><span class="line">            if i &lt; 0 and k &lt;&#x3D; 1: return 0</span><br><span class="line">            if k &gt; i + 1 or k &lt; 1: return math.inf</span><br><span class="line">            if houses[i] and c !&#x3D; houses[i]: return math.inf</span><br><span class="line">            </span><br><span class="line">            paint_cost &#x3D; cost[i][c - 1] * (not houses[i])</span><br><span class="line">            prev_cost &#x3D; min(helper(i - 1, k, c), min([helper(i - 1, k - 1, c_) \</span><br><span class="line">                    for c_ in range(1, n + 1) if c_ !&#x3D; c] or [math.inf]))</span><br><span class="line">            </span><br><span class="line">            return paint_cost + prev_cost</span><br><span class="line">        </span><br><span class="line">        res &#x3D; min(helper(m - 1, target, c) for c in range(1, n + 1))</span><br><span class="line">        return res if res &lt; math.inf else -1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/06/07/paint-house-iii/" data-id="cke3z6qre001dz4hkezjyb1bk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/2/">Next &amp;raquo;</a>
+  </nav>
 
 </section>
         
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Leetcode/">Leetcode</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Algorithm/" style="font-size: 10px;">Algorithm</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/08/">August 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/05/">May 2019</a></li></ul>
     </div>
   </div>
 
@@ -144,7 +684,23 @@
       <ul>
         
           <li>
+            <a href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
+          </li>
+        
+          <li>
             <a href="/blog/2020/08/21/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/29/minimum-number-of-increments-on-subarrays-to-form-a-target-array/">Minimum Number Of Increments On Subarrays To Form A Target Array&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/26/number-of-good-ways-to-split-a-string/">Number Of Good Ways To Split A String&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/">Number Of Sub Arrays With Odd Sum&#39;s Solution</a>
           </li>
         
       </ul>

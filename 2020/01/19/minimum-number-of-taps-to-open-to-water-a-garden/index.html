@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Minimum Number Of Taps To Open To Water A Garden&#39;s Solution | Cheng Yanru&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Original Question: Minimum Number Of Taps To Open To Water A GardenOriginal Solution Post: Solution Constant Space! O(n) Greedy Approuch (AC: 132ms beats 100%)This question is very similar to Jump Gam">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Minimum Number Of Taps To Open To Water A Garden&#39;s Solution">
+<meta property="og:url" content="https://cyanru.com/blog/2020/01/19/minimum-number-of-taps-to-open-to-water-a-garden/index.html">
+<meta property="og:site_name" content="Cheng Yanru&#39;s Blog">
+<meta property="og:description" content="Original Question: Minimum Number Of Taps To Open To Water A GardenOriginal Solution Post: Solution Constant Space! O(n) Greedy Approuch (AC: 132ms beats 100%)This question is very similar to Jump Gam">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-19T14:08:00.000Z">
+<meta property="article:modified_time" content="2020-08-21T08:32:10.049Z">
+<meta property="article:author" content="Cheng Yanru">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Cheng Yanru&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Cheng Yanru&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cyanru.com/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-minimum-number-of-taps-to-open-to-water-a-garden" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/01/19/minimum-number-of-taps-to-open-to-water-a-garden/" class="article-date">
+  <time datetime="2020-01-19T14:08:00.000Z" itemprop="datePublished">2020-01-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Minimum Number Of Taps To Open To Water A Garden&#39;s Solution
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden">Minimum Number Of Taps To Open To Water A Garden</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/discuss/484272/python-o1-memory-on-time-greedy-with-explanation-132ms-beats-100">Solution</a></p>
+<p><strong>Constant Space! O(n) Greedy Approuch (AC: 132ms beats 100%)</strong><br><br>This question is very similar to <a target="_blank" rel="noopener" href="https://leetcode.com/problems/jump-game-ii/">Jump Game II</a>.</p>
+<ol>
+<li>Inplace modify <code>ranges</code> so that each element represents the furthest index you can reach by taking one jump.</li>
+<li>Find the minimal jump you need to reach the end.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def minTaps(self, n: int, ranges: List[int]) -&gt; int:</span><br><span class="line">        for i,r in enumerate(ranges):</span><br><span class="line">            l &#x3D; max(0,i-r)</span><br><span class="line">            ranges[l] &#x3D; max(i+r, ranges[l])</span><br><span class="line">            </span><br><span class="line">        res &#x3D; lo &#x3D; hi &#x3D; 0            </span><br><span class="line">        while hi &lt; n:</span><br><span class="line">            lo, hi &#x3D; hi, max(ranges[lo:hi+1])</span><br><span class="line">            if hi &#x3D;&#x3D; lo: return -1</span><br><span class="line">            res +&#x3D; 1</span><br><span class="line">        return res  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>O(nlogn) Greedy Approuch (AC: 175ms)</strong></p>
+<ol>
+<li>Convert <code>ranges</code> in the format of <code>[(l0,r0), (l1,r1)...]</code>, where <code>li,ri</code> represents the left boundary and right boundary of a tap. O(n)</li>
+<li>Sort the taps. O(nlogn)</li>
+<li>Select taps greedily. We select the one that can reach the furthest among those whose left boundary overlaps with the current furthest point.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def minTaps(self, n: int, ranges: List[int]) -&gt; int:</span><br><span class="line">        taps &#x3D; sorted([(max(p-r,0), min(p+r,n)) for p, r in enumerate(ranges)])</span><br><span class="line">        </span><br><span class="line">        new_furthest &#x3D; furthest &#x3D; ind &#x3D; 0</span><br><span class="line">        for res in range(1,n+1):</span><br><span class="line">            for i,(l,r) in enumerate(taps[ind:],ind):</span><br><span class="line">                if l &gt; furthest: break</span><br><span class="line">                new_furthest &#x3D; max(new_furthest, r)</span><br><span class="line">            ind &#x3D; i                </span><br><span class="line">                </span><br><span class="line">            if new_furthest &#x3D;&#x3D; furthest and new_furthest !&#x3D; n: return -1</span><br><span class="line">            if new_furthest &#x3D;&#x3D; n: return res</span><br><span class="line">            furthest &#x3D; new_furthest</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/01/19/minimum-number-of-taps-to-open-to-water-a-garden/" data-id="cke3xyks2000d4ilu5ul3a3ly" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2020/02/09/jump-game-iv/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Jump Game Iv&#39;s Solution
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2020/01/13/minimum-distance-to-type-a-word-using-two-fingers/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Minimum Distance To Type A Word Using Two Fingers&#39;s Solution</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Leetcode/">Leetcode</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Algorithm/" style="font-size: 10px;">Algorithm</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/05/">May 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/08/21/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/29/minimum-number-of-increments-on-subarrays-to-form-a-target-array/">Minimum Number Of Increments On Subarrays To Form A Target Array&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/26/number-of-good-ways-to-split-a-string/">Number Of Good Ways To Split A String&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/">Number Of Sub Arrays With Odd Sum&#39;s Solution</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Cheng Yanru<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
