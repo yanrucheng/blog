@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Stone Game V&#39;s Solution | Cheng Yanru&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Original Question: Stone Game VOriginal Solution Post: Solution QuestionStone Game VThere are several stones arranged in a row, and each stone has an associated value which is an integer given in the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stone Game V&#39;s Solution">
+<meta property="og:url" content="https://cyanru.com/blog/2020/08/23/stone-game-v/index.html">
+<meta property="og:site_name" content="Cheng Yanru&#39;s Blog">
+<meta property="og:description" content="Original Question: Stone Game VOriginal Solution Post: Solution QuestionStone Game VThere are several stones arranged in a row, and each stone has an associated value which is an integer given in the">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-23T11:42:05.000Z">
+<meta property="article:modified_time" content="2020-08-23T04:16:55.363Z">
+<meta property="article:author" content="Cheng Yanru">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Cheng Yanru&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Cheng Yanru&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cyanru.com/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-stone-game-v" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/08/23/stone-game-v/" class="article-date">
+  <time datetime="2020-08-23T11:42:05.000Z" itemprop="datePublished">2020-08-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Stone Game V&#39;s Solution
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Original Question: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/stone-game-v/">Stone Game V</a><br>Original Solution Post: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/stone-game-v/discuss/806736/Python-Golang-Simple-DP-Solution-with-a-Trick-for-Python">Solution</a></p>
+<h1 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h1><h2 id="Stone-Game-V"><a href="#Stone-Game-V" class="headerlink" title="Stone Game V"></a>Stone Game V</h2><p>There are several stones <strong>arranged in a row</strong>, and each stone has an associated value which is an integer given in the array stoneValue.</p>
+<p>In each round of the game, Alice divides the row into <strong>two non-empty rows</strong> (i.e. left row and right row), then Bob calculates the value of each row which is the sum of the values of all the stones in this row. Bob throws away the row which has the maximum value, and Alice’s score increases by the value of the remaining row. If the value of the two rows are equal, Bob lets Alice decide which row will be thrown away. The next round starts with the remaining row.</p>
+<p>The game ends when there is only one stone remaining. Alice’s is initially zero.</p>
+<p>Return the maximum score that Alice can obtain.</p>
+<h3 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1:"></a>Example 1:</h3><p><strong>Input:</strong> stoneValue = [6,2,3,4,5,5]<br><strong>Output:</strong> 18<br><strong>Explanation:</strong> In the first round, Alice divides the row to [6,2,3], [4,5,5]. The left row has the value 11 and the right row has value 14. Bob throws away the right row and Alice’s score is now 11.<br>In the second round Alice divides the row to [6], [2,3]. This time Bob throws away the left row and Alice’s score becomes 16 (11 + 5).<br>The last round Alice has only one choice to divide the row which is [2], [3]. Bob throws away the right row and Alice’s score is now 18 (16 + 2). The game ends because only one stone is remaining in the row.</p>
+<h3 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2:"></a>Example 2:</h3><p><strong>Input:</strong> stoneValue = [7,7,7,7,7,7,7]<br><strong>Output:</strong> 28</p>
+<h3 id="Example-3"><a href="#Example-3" class="headerlink" title="Example 3:"></a>Example 3:</h3><p><strong>Input:</strong> stoneValue = [4]<br><strong>Output:</strong> 0</p>
+<h3 id="Constraints"><a href="#Constraints" class="headerlink" title="Constraints:"></a>Constraints:</h3><ul>
+<li><code>1 &lt;= stoneValue.length &lt;= 500</code></li>
+<li><code>1 &lt;= stoneValue[i] &lt;= 10^6</code></li>
+</ul>
+<h1 id="Python-Golang-Simple-DP-Solution-with-a-Trick-for-Python"><a href="#Python-Golang-Simple-DP-Solution-with-a-Trick-for-Python" class="headerlink" title="[Python / Golang] Simple DP Solution with a Trick for Python"></a>[Python / Golang] Simple DP Solution with a Trick for Python</h1><h2 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h2><p>The idea is straight forward. we just try out all the possibilities to find the answer. Naive brute force solution will lead to O(n!) complexity, so we need to store the interim results to improve the complexity to O(n^3).</p>
+<h2 id="A-trick-for-slower-languages"><a href="#A-trick-for-slower-languages" class="headerlink" title="A trick for slower languages"></a>A trick for slower languages</h2><p>It turns out that O(n^3) is not enough for dynamic languages like Python. So I add a shortcut for a special case when all the elements within a specific range are the same. In this special case, we can get the results in O(logn) complexity.</p>
+<h2 id="Complexity"><a href="#Complexity" class="headerlink" title="Complexity"></a>Complexity</h2><p>Time: <code>O(n^3)</code><br>Space: <code>O(n^2)</code></p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">from functools import lru_cache</span><br><span class="line">class Solution:</span><br><span class="line">    def stoneGameV(self, stoneValue: List[int]) -&gt; int:</span><br><span class="line">        presum &#x3D; [0]</span><br><span class="line">        for s in stoneValue:</span><br><span class="line">            presum +&#x3D; presum[-1] + s,</span><br><span class="line">            </span><br><span class="line">        def sm(i, j):</span><br><span class="line">            return presum[j + 1] - presum[i]</span><br><span class="line">        </span><br><span class="line">        @lru_cache(None)</span><br><span class="line">        def helper(i, j):</span><br><span class="line">            if i &#x3D;&#x3D; j: return 0</span><br><span class="line">            </span><br><span class="line">            if all(stoneValue[k] &#x3D;&#x3D; stoneValue[j] for k in range(i, j)):</span><br><span class="line">                cnt &#x3D; 0</span><br><span class="line">                l &#x3D; j - i + 1</span><br><span class="line">                while l &gt; 1:</span><br><span class="line">                    l &#x2F;&#x2F;&#x3D; 2</span><br><span class="line">                    cnt +&#x3D; l</span><br><span class="line">                return cnt * stoneValue[j]                    </span><br><span class="line">            </span><br><span class="line">            res &#x3D; 0</span><br><span class="line">            for k in range(i, j):</span><br><span class="line">                if sm(i, k) &lt; sm(k + 1, j):</span><br><span class="line">                    score &#x3D; helper(i, k) + sm(i, k)</span><br><span class="line">                elif sm(i, k) &gt; sm(k + 1, j):</span><br><span class="line">                    score &#x3D; sm(k + 1, j) + helper(k + 1, j)</span><br><span class="line">                else:                    </span><br><span class="line">                    score &#x3D; max(helper(i, k) + sm(i, k), sm(k + 1, j) + helper(k + 1, j))</span><br><span class="line">                res &#x3D; max(res, score)</span><br><span class="line">            return res                </span><br><span class="line">        </span><br><span class="line">        return helper(0, len(stoneValue) - 1)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Golang"><a href="#Golang" class="headerlink" title="Golang"></a>Golang</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">func stoneGameV(stoneValue []int) int &#123;</span><br><span class="line">    n :&#x3D; len(stoneValue)</span><br><span class="line">    memo :&#x3D; make([][]int, n)</span><br><span class="line">    for i :&#x3D; range memo &#123;</span><br><span class="line">        memo[i] &#x3D; make([]int, n)</span><br><span class="line">    &#125;</span><br><span class="line">    presum :&#x3D; make([]int, n + 1)</span><br><span class="line">    for i :&#x3D; 1; i &lt;&#x3D; n; i++ &#123;</span><br><span class="line">        presum[i] &#x3D; presum[i - 1] + stoneValue[i - 1]</span><br><span class="line">    &#125;</span><br><span class="line">    sum :&#x3D; func(i, j int) int &#123;return presum[j + 1] - presum[i]&#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    for l :&#x3D; 2; l &lt;&#x3D; n; l++ &#123; &#x2F;&#x2F; l mean length</span><br><span class="line">        for i :&#x3D; 0; i &lt; n - l + 1; i++ &#123;</span><br><span class="line">            j :&#x3D; i + l - 1</span><br><span class="line">            score :&#x3D; 0</span><br><span class="line">            for k :&#x3D; i; k &lt; j; k++ &#123;</span><br><span class="line">                switch &#123;</span><br><span class="line">                case sum(i, k) &gt; sum(k + 1, j):</span><br><span class="line">                    score &#x3D; max(score, memo[k + 1][j] + sum(k + 1, j))</span><br><span class="line">                case sum(i, k) &lt; sum(k + 1, j):</span><br><span class="line">                    score &#x3D; max(score, memo[i][k] + sum(i, k))</span><br><span class="line">                default:</span><br><span class="line">                    tmp :&#x3D; max(memo[i][k] + sum(i, k), memo[k + 1][j] + sum(k + 1, j))</span><br><span class="line">                    score &#x3D; max(score, tmp)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            memo[i][j] &#x3D; score</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return memo[0][n - 1]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func max(i, j int) int &#123;</span><br><span class="line">    if i &lt; j &#123;</span><br><span class="line">        return j</span><br><span class="line">    &#125;</span><br><span class="line">    return i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/08/23/stone-game-v/" data-id="cke6ky73d002bzrhif66d3ct7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/08/23/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Leetcode/">Leetcode</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Algorithm/" style="font-size: 10px;">Algorithm</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/05/">May 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2020/08/23/stone-game-v/">Stone Game V&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/08/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/29/minimum-number-of-increments-on-subarrays-to-form-a-target-array/">Minimum Number Of Increments On Subarrays To Form A Target Array&#39;s Solution</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/07/26/number-of-good-ways-to-split-a-string/">Number Of Good Ways To Split A String&#39;s Solution</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Cheng Yanru<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+
+  
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

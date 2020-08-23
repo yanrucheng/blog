@@ -64,6 +64,64 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-paint-house-iii" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/06/07/paint-house-iii/" class="article-date">
+  <time datetime="2020-06-07T12:23:00.000Z" itemprop="datePublished">2020-06-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/06/07/paint-house-iii/">Paint House Iii&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/paint-house-iii">Paint House Iii</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/paint-house-iii/discuss/674298/C%2B%2BPython-Simple-DP-top-down-bottom-up">Solution</a></p>
+<p><strong>Complexity</strong><br><br>Time: <code>O(n * n * m * target)</code><br><br>Space: <code>O(n * m * target) (can be optimized to O(n * target))</code></p>
+<p><strong>C++, bottom-up, DP</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int minCost(vector&lt;int&gt;&amp; houses, vector&lt;vector&lt;int&gt;&gt;&amp; cost, int m, int n, int target) &#123;</span><br><span class="line">        int INF &#x3D; 1000000;</span><br><span class="line">        vector&lt;vector&lt;vector&lt;int&gt;&gt;&gt; dp(m, vector&lt;vector&lt;int&gt;&gt;(target + 1, vector&lt;int&gt;(n, INF)));</span><br><span class="line">            </span><br><span class="line">        for (int c &#x3D; 1; c &lt;&#x3D; n; c++)</span><br><span class="line">            if (houses[0] &#x3D;&#x3D; c)</span><br><span class="line">                dp[0][1][c - 1] &#x3D; 0;</span><br><span class="line">            else if (!houses[0])</span><br><span class="line">                dp[0][1][c - 1] &#x3D; cost[0][c - 1];</span><br><span class="line">        </span><br><span class="line">        for (int i &#x3D; 1; i &lt; m; i++)</span><br><span class="line">            for (int k &#x3D; 1; k &lt;&#x3D; min(target, i + 1); k++)</span><br><span class="line">                for (int c &#x3D; 1; c &lt;&#x3D; n; c++) &#123;</span><br><span class="line">                    if (houses[i] &amp;&amp; c !&#x3D; houses[i]) continue;</span><br><span class="line">                    int same_neighbor &#x3D; dp[i - 1][k][c - 1];</span><br><span class="line">                    int diff_neighbor &#x3D; INF;</span><br><span class="line">                    for (int c_ &#x3D; 1; c_ &lt;&#x3D; n; c_++)</span><br><span class="line">                        if (c_ !&#x3D; c)</span><br><span class="line">                            diff_neighbor &#x3D; min(diff_neighbor, dp[i - 1][k - 1][c_ - 1]);</span><br><span class="line">                    int paint_cost &#x3D; cost[i][c - 1] * int(!houses[i]);</span><br><span class="line">                    dp[i][k][c - 1] &#x3D; min(same_neighbor, diff_neighbor) + paint_cost;</span><br><span class="line">                &#125;</span><br><span class="line">        int res &#x3D; *min_element(dp.back().back().begin(), dp.back().back().end());</span><br><span class="line">        return (res &lt; INF) ? res : -1;            </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Python, bottom-up, DP</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def minCost(self, houses: List[int], cost: List[List[int]], m: int, n: int, target: int) -&gt; int:</span><br><span class="line">        # dp[i][c][k]: i means the ith house, c means the cth color, k means k neighbor groups</span><br><span class="line">        dp &#x3D; [[[math.inf for _ in range(n)] for _ in range(target + 1)] for _ in range(m)]</span><br><span class="line">        </span><br><span class="line">        for c in range(1, n + 1):</span><br><span class="line">            if houses[0] &#x3D;&#x3D; c: dp[0][1][c - 1] &#x3D; 0</span><br><span class="line">            elif not houses[0]: dp[0][1][c - 1] &#x3D; cost[0][c - 1]</span><br><span class="line">                </span><br><span class="line">        for i in range(1, m):</span><br><span class="line">            for k in range(1, min(target, i + 1) + 1):</span><br><span class="line">                for c in range(1, n + 1):</span><br><span class="line">                    if houses[i] and c !&#x3D; houses[i]: continue</span><br><span class="line">                    same_neighbor_cost &#x3D; dp[i - 1][k][c - 1]</span><br><span class="line">                    diff_neighbor_cost &#x3D; min([dp[i - 1][k - 1][c_] for c_ in range(n) if c_ !&#x3D; c - 1] or [math.inf])</span><br><span class="line">                    paint_cost &#x3D; cost[i][c - 1] * (not houses[i])</span><br><span class="line">                    dp[i][k][c - 1] &#x3D; min(same_neighbor_cost, diff_neighbor_cost) + paint_cost</span><br><span class="line">        res &#x3D; min(dp[-1][-1])</span><br><span class="line">        return res if res &lt; math.inf else -1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Python, top-down, recursion</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">from functools import lru_cache</span><br><span class="line">class Solution:</span><br><span class="line">    def minCost(self, houses: List[int], cost: List[List[int]], m: int, n: int, target: int) -&gt; int:</span><br><span class="line">        </span><br><span class="line">        @lru_cache(None)</span><br><span class="line">        def helper(i, k, c):</span><br><span class="line">            # min cost for paint the ith house in color c, resulting k neighborhood</span><br><span class="line">            if i &lt; 0 and k &lt;&#x3D; 1: return 0</span><br><span class="line">            if k &gt; i + 1 or k &lt; 1: return math.inf</span><br><span class="line">            if houses[i] and c !&#x3D; houses[i]: return math.inf</span><br><span class="line">            </span><br><span class="line">            paint_cost &#x3D; cost[i][c - 1] * (not houses[i])</span><br><span class="line">            prev_cost &#x3D; min(helper(i - 1, k, c), min([helper(i - 1, k - 1, c_) \</span><br><span class="line">                    for c_ in range(1, n + 1) if c_ !&#x3D; c] or [math.inf]))</span><br><span class="line">            </span><br><span class="line">            return paint_cost + prev_cost</span><br><span class="line">        </span><br><span class="line">        res &#x3D; min(helper(m - 1, target, c) for c in range(1, n + 1))</span><br><span class="line">        return res if res &lt; math.inf else -1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/06/07/paint-house-iii/" data-id="cke6ky72z001wzrhi9w06g3o2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-max-dot-product-of-two-subsequences" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/05/24/max-dot-product-of-two-subsequences/" class="article-date">
@@ -131,7 +189,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/05/24/max-dot-product-of-two-subsequences/" data-id="cke3xykrz00084iluasz80kmb" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/05/24/max-dot-product-of-two-subsequences/" data-id="cke6ky72k000zzrhi147n7l82" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -192,7 +250,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/04/26/constrained-subsequence-sum/" data-id="cke3xykro00004ilu37fkb24c" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/04/26/constrained-subsequence-sum/" data-id="cke6ky7230005zrhifu3e5p4o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -253,7 +311,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/04/19/restore-the-array/" data-id="cke3xyks7000k4ilu2db296un" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/04/19/restore-the-array/" data-id="cke6ky73a0025zrhi6w3l7kxt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -306,7 +364,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/04/19/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/" data-id="cke3xyks7000l4ilu736ra064" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/04/19/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/" data-id="cke6ky73e002ezrhi06k2e5g0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -367,7 +425,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/04/12/number-of-ways-to-paint-n-3-grid/" data-id="cke3xyks4000g4ilu19hh0ahk" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/04/12/number-of-ways-to-paint-n-3-grid/" data-id="cke6ky72y001tzrhigul42sgi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -416,7 +474,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/03/22/longest-happy-prefix/" data-id="cke3xykry00074ilu9qsp5iro" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/03/22/longest-happy-prefix/" data-id="cke6ky72i000wzrhi3q5o85yv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -484,7 +542,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/03/08/frog-position-after-t-seconds/" data-id="cke3xykrw00044ilubn7812wk" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/03/08/frog-position-after-t-seconds/" data-id="cke6ky729000gzrhihbawe7gc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -545,7 +603,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/03/08/maximum-sum-bst-in-binary-tree/" data-id="cke3z6qr5000vz4hk4mrb6i1g" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/03/08/maximum-sum-bst-in-binary-tree/" data-id="cke6ky72o0018zrhi3dxy4wyu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -613,55 +671,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/02/23/largest-multiple-of-three/" data-id="cke3z6qqz000kz4hk54tqa9ep" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-closest-divisors" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/02/23/closest-divisors/" class="article-date">
-  <time datetime="2020-02-23T12:43:00.000Z" itemprop="datePublished">2020-02-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/02/23/closest-divisors/">Closest Divisors&#39;s Solution</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/closest-divisors">Closest Divisors</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/closest-divisors/discuss/517722/Python-4-line-O(logn)">Solution</a></p>
-<p><strong>Complexity</strong><br><br>Time: <code>O(logn)</code><br><br>Space: <code>O(1)</code></p>
-<p><strong>Python 3</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def closestDivisors(self, num: int) -&gt; List[int]:</span><br><span class="line">        for k in range(int(math.sqrt(num+2)), 0, -1):</span><br><span class="line">            for x in (num+1, num+2):</span><br><span class="line">                if not x % k:</span><br><span class="line">                    return x &#x2F;&#x2F; k, k</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/02/23/closest-divisors/" data-id="cke3z6qq80000z4hke1yudaf7" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/02/23/largest-multiple-of-three/" data-id="cke6ky72h000uzrhi4k2s3t5k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -677,7 +687,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/blog/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/3/">Next &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/blog/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/3/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -730,11 +740,15 @@
       <ul>
         
           <li>
-            <a href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
+            <a href="/blog/2020/08/23/stone-game-v/">Stone Game V&#39;s Solution</a>
           </li>
         
           <li>
-            <a href="/blog/2020/08/21/hello-world/">Hello World</a>
+            <a href="/blog/2020/08/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
           </li>
         
           <li>
@@ -743,10 +757,6 @@
         
           <li>
             <a href="/blog/2020/07/26/number-of-good-ways-to-split-a-string/">Number Of Good Ways To Split A String&#39;s Solution</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/">Number Of Sub Arrays With Odd Sum&#39;s Solution</a>
           </li>
         
       </ul>

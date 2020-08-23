@@ -64,6 +64,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-closest-divisors" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/02/23/closest-divisors/" class="article-date">
+  <time datetime="2020-02-23T12:43:00.000Z" itemprop="datePublished">2020-02-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/02/23/closest-divisors/">Closest Divisors&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/closest-divisors">Closest Divisors</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/closest-divisors/discuss/517722/Python-4-line-O(logn)">Solution</a></p>
+<p><strong>Complexity</strong><br><br>Time: <code>O(logn)</code><br><br>Space: <code>O(1)</code></p>
+<p><strong>Python 3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def closestDivisors(self, num: int) -&gt; List[int]:</span><br><span class="line">        for k in range(int(math.sqrt(num+2)), 0, -1):</span><br><span class="line">            for x in (num+1, num+2):</span><br><span class="line">                if not x % k:</span><br><span class="line">                    return x &#x2F;&#x2F; k, k</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/02/23/closest-divisors/" data-id="cke6ky71h0000zrhi26wzf2ag" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-count-all-valid-pickup-and-delivery-options" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/02/23/count-all-valid-pickup-and-delivery-options/" class="article-date">
@@ -134,7 +182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/02/23/count-all-valid-pickup-and-delivery-options/" data-id="cke3xykru00024ilu9cetbfta" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/02/23/count-all-valid-pickup-and-delivery-options/" data-id="cke6ky7250008zrhi4vztga7b" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -188,7 +236,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/02/18/construct-target-array-with-multiple-sums/" data-id="cke3xykrt00014ilu9slwadyh" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/02/18/construct-target-array-with-multiple-sums/" data-id="cke6ky7240006zrhie5owbqm6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -255,7 +303,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/02/09/maximum-students-taking-exam/" data-id="cke3xyks0000a4ilu3nmn2qz8" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/02/09/maximum-students-taking-exam/" data-id="cke6ky72m0015zrhi8vric4wp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -310,7 +358,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/02/09/jump-game-iv/" data-id="cke3z6qqw000fz4hkh8qjh4kn" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/02/09/jump-game-iv/" data-id="cke6ky72e000pzrhi2y3tb3x3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -371,7 +419,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/01/19/minimum-number-of-taps-to-open-to-water-a-garden/" data-id="cke3xyks2000d4ilu5ul3a3ly" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/01/19/minimum-number-of-taps-to-open-to-water-a-garden/" data-id="cke6ky72s001hzrhi49oe5pqb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -429,7 +477,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/01/13/minimum-distance-to-type-a-word-using-two-fingers/" data-id="cke3xyks0000b4iluda9cgzil" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/01/13/minimum-distance-to-type-a-word-using-two-fingers/" data-id="cke6ky72p001bzrhi3ufq8onf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -475,7 +523,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2019/06/23/find-in-mountain-array/" data-id="cke3z6qqs0006z4hk05fd3z95" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2019/06/23/find-in-mountain-array/" data-id="cke6ky728000dzrhi93sj66i0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -527,7 +575,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2019/05/29/grumpy-bookstore-owner/" data-id="cke3z6qqv000cz4hkhazy1vix" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2019/05/29/grumpy-bookstore-owner/" data-id="cke6ky72b000jzrhi85y1gpi0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -577,58 +625,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2019/05/20/remove-all-adjacent-duplicates-in-string/" data-id="cke3xyks6000i4ilucn0yagi1" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-robot-bounded-in-circle" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2019/05/16/robot-bounded-in-circle/" class="article-date">
-  <time datetime="2019-05-16T10:03:00.000Z" itemprop="datePublished">2019-05-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2019/05/16/robot-bounded-in-circle/">Robot Bounded In Circle&#39;s Solution</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/robot-bounded-in-circle">Robot Bounded In Circle</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/robot-bounded-in-circle/discuss/293120/python-on-6-line-solution-beats-100">Solution</a></p>
-<p>Tricks:</p>
-<ul>
-<li>Complex number suits this question well.</li>
-<li>Combinations like “LLLL”, “RRRR”, “RL”, “LR” does not have any effect, removing these combinations are considered very efficient in python, which will lead to a ~15% performance gain.</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def isRobotBounded(self, ins: str) -&gt; bool:</span><br><span class="line">        ins &#x3D; ins.replace(&#39;LLLL&#39;, &#39;&#39;).replace(&#39;RRRR&#39;, &#39;&#39;).replace(&#39;RL&#39;, &#39;&#39;).replace(&#39;LR&#39;, &#39;&#39;)</span><br><span class="line">        d, p &#x3D; 1, 0</span><br><span class="line">        for c in ins:</span><br><span class="line">            if c &#x3D;&#x3D; &#39;G&#39;: p +&#x3D; d</span><br><span class="line">            else: d *&#x3D; &#123;&#39;L&#39;:1j, &#39;R&#39;:-1j&#125;[c]</span><br><span class="line">        return d.real &#x3D;&#x3D; 0 or p &#x3D;&#x3D; 0 or d.real &lt; 0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2019/05/16/robot-bounded-in-circle/" data-id="cke3xyks6000j4ilu3v3e6cv3" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2019/05/20/remove-all-adjacent-duplicates-in-string/" data-id="cke6ky7390022zrhi10jhg8et" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -644,7 +641,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/blog/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/blog/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/4/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -697,11 +694,15 @@
       <ul>
         
           <li>
-            <a href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
+            <a href="/blog/2020/08/23/stone-game-v/">Stone Game V&#39;s Solution</a>
           </li>
         
           <li>
-            <a href="/blog/2020/08/21/hello-world/">Hello World</a>
+            <a href="/blog/2020/08/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
           </li>
         
           <li>
@@ -710,10 +711,6 @@
         
           <li>
             <a href="/blog/2020/07/26/number-of-good-ways-to-split-a-string/">Number Of Good Ways To Split A String&#39;s Solution</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/">Number Of Sub Arrays With Odd Sum&#39;s Solution</a>
           </li>
         
       </ul>

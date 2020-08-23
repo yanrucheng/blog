@@ -64,6 +64,116 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-stone-game-v" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/08/23/stone-game-v/" class="article-date">
+  <time datetime="2020-08-23T11:42:05.000Z" itemprop="datePublished">2020-08-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/08/23/stone-game-v/">Stone Game V&#39;s Solution</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Original Question: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/stone-game-v/">Stone Game V</a><br>Original Solution Post: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/stone-game-v/discuss/806736/Python-Golang-Simple-DP-Solution-with-a-Trick-for-Python">Solution</a></p>
+<h1 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h1><h2 id="Stone-Game-V"><a href="#Stone-Game-V" class="headerlink" title="Stone Game V"></a>Stone Game V</h2><p>There are several stones <strong>arranged in a row</strong>, and each stone has an associated value which is an integer given in the array stoneValue.</p>
+<p>In each round of the game, Alice divides the row into <strong>two non-empty rows</strong> (i.e. left row and right row), then Bob calculates the value of each row which is the sum of the values of all the stones in this row. Bob throws away the row which has the maximum value, and Alice’s score increases by the value of the remaining row. If the value of the two rows are equal, Bob lets Alice decide which row will be thrown away. The next round starts with the remaining row.</p>
+<p>The game ends when there is only one stone remaining. Alice’s is initially zero.</p>
+<p>Return the maximum score that Alice can obtain.</p>
+<h3 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1:"></a>Example 1:</h3><p><strong>Input:</strong> stoneValue = [6,2,3,4,5,5]<br><strong>Output:</strong> 18<br><strong>Explanation:</strong> In the first round, Alice divides the row to [6,2,3], [4,5,5]. The left row has the value 11 and the right row has value 14. Bob throws away the right row and Alice’s score is now 11.<br>In the second round Alice divides the row to [6], [2,3]. This time Bob throws away the left row and Alice’s score becomes 16 (11 + 5).<br>The last round Alice has only one choice to divide the row which is [2], [3]. Bob throws away the right row and Alice’s score is now 18 (16 + 2). The game ends because only one stone is remaining in the row.</p>
+<h3 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2:"></a>Example 2:</h3><p><strong>Input:</strong> stoneValue = [7,7,7,7,7,7,7]<br><strong>Output:</strong> 28</p>
+<h3 id="Example-3"><a href="#Example-3" class="headerlink" title="Example 3:"></a>Example 3:</h3><p><strong>Input:</strong> stoneValue = [4]<br><strong>Output:</strong> 0</p>
+<h3 id="Constraints"><a href="#Constraints" class="headerlink" title="Constraints:"></a>Constraints:</h3><ul>
+<li><code>1 &lt;= stoneValue.length &lt;= 500</code></li>
+<li><code>1 &lt;= stoneValue[i] &lt;= 10^6</code></li>
+</ul>
+<h1 id="Python-Golang-Simple-DP-Solution-with-a-Trick-for-Python"><a href="#Python-Golang-Simple-DP-Solution-with-a-Trick-for-Python" class="headerlink" title="[Python / Golang] Simple DP Solution with a Trick for Python"></a>[Python / Golang] Simple DP Solution with a Trick for Python</h1><h2 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h2><p>The idea is straight forward. we just try out all the possibilities to find the answer. Naive brute force solution will lead to O(n!) complexity, so we need to store the interim results to improve the complexity to O(n^3).</p>
+<h2 id="A-trick-for-slower-languages"><a href="#A-trick-for-slower-languages" class="headerlink" title="A trick for slower languages"></a>A trick for slower languages</h2><p>It turns out that O(n^3) is not enough for dynamic languages like Python. So I add a shortcut for a special case when all the elements within a specific range are the same. In this special case, we can get the results in O(logn) complexity.</p>
+<h2 id="Complexity"><a href="#Complexity" class="headerlink" title="Complexity"></a>Complexity</h2><p>Time: <code>O(n^3)</code><br>Space: <code>O(n^2)</code></p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">from functools import lru_cache</span><br><span class="line">class Solution:</span><br><span class="line">    def stoneGameV(self, stoneValue: List[int]) -&gt; int:</span><br><span class="line">        presum &#x3D; [0]</span><br><span class="line">        for s in stoneValue:</span><br><span class="line">            presum +&#x3D; presum[-1] + s,</span><br><span class="line">            </span><br><span class="line">        def sm(i, j):</span><br><span class="line">            return presum[j + 1] - presum[i]</span><br><span class="line">        </span><br><span class="line">        @lru_cache(None)</span><br><span class="line">        def helper(i, j):</span><br><span class="line">            if i &#x3D;&#x3D; j: return 0</span><br><span class="line">            </span><br><span class="line">            if all(stoneValue[k] &#x3D;&#x3D; stoneValue[j] for k in range(i, j)):</span><br><span class="line">                cnt &#x3D; 0</span><br><span class="line">                l &#x3D; j - i + 1</span><br><span class="line">                while l &gt; 1:</span><br><span class="line">                    l &#x2F;&#x2F;&#x3D; 2</span><br><span class="line">                    cnt +&#x3D; l</span><br><span class="line">                return cnt * stoneValue[j]                    </span><br><span class="line">            </span><br><span class="line">            res &#x3D; 0</span><br><span class="line">            for k in range(i, j):</span><br><span class="line">                if sm(i, k) &lt; sm(k + 1, j):</span><br><span class="line">                    score &#x3D; helper(i, k) + sm(i, k)</span><br><span class="line">                elif sm(i, k) &gt; sm(k + 1, j):</span><br><span class="line">                    score &#x3D; sm(k + 1, j) + helper(k + 1, j)</span><br><span class="line">                else:                    </span><br><span class="line">                    score &#x3D; max(helper(i, k) + sm(i, k), sm(k + 1, j) + helper(k + 1, j))</span><br><span class="line">                res &#x3D; max(res, score)</span><br><span class="line">            return res                </span><br><span class="line">        </span><br><span class="line">        return helper(0, len(stoneValue) - 1)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Golang"><a href="#Golang" class="headerlink" title="Golang"></a>Golang</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">func stoneGameV(stoneValue []int) int &#123;</span><br><span class="line">    n :&#x3D; len(stoneValue)</span><br><span class="line">    memo :&#x3D; make([][]int, n)</span><br><span class="line">    for i :&#x3D; range memo &#123;</span><br><span class="line">        memo[i] &#x3D; make([]int, n)</span><br><span class="line">    &#125;</span><br><span class="line">    presum :&#x3D; make([]int, n + 1)</span><br><span class="line">    for i :&#x3D; 1; i &lt;&#x3D; n; i++ &#123;</span><br><span class="line">        presum[i] &#x3D; presum[i - 1] + stoneValue[i - 1]</span><br><span class="line">    &#125;</span><br><span class="line">    sum :&#x3D; func(i, j int) int &#123;return presum[j + 1] - presum[i]&#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    for l :&#x3D; 2; l &lt;&#x3D; n; l++ &#123; &#x2F;&#x2F; l mean length</span><br><span class="line">        for i :&#x3D; 0; i &lt; n - l + 1; i++ &#123;</span><br><span class="line">            j :&#x3D; i + l - 1</span><br><span class="line">            score :&#x3D; 0</span><br><span class="line">            for k :&#x3D; i; k &lt; j; k++ &#123;</span><br><span class="line">                switch &#123;</span><br><span class="line">                case sum(i, k) &gt; sum(k + 1, j):</span><br><span class="line">                    score &#x3D; max(score, memo[k + 1][j] + sum(k + 1, j))</span><br><span class="line">                case sum(i, k) &lt; sum(k + 1, j):</span><br><span class="line">                    score &#x3D; max(score, memo[i][k] + sum(i, k))</span><br><span class="line">                default:</span><br><span class="line">                    tmp :&#x3D; max(memo[i][k] + sum(i, k), memo[k + 1][j] + sum(k + 1, j))</span><br><span class="line">                    score &#x3D; max(score, tmp)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            memo[i][j] &#x3D; score</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return memo[0][n - 1]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func max(i, j int) int &#123;</span><br><span class="line">    if i &lt; j &#123;</span><br><span class="line">        return j</span><br><span class="line">    &#125;</span><br><span class="line">    return i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/08/23/stone-game-v/" data-id="cke6ky73d002bzrhif66d3ct7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2020/08/23/hello-world/" class="article-date">
+  <time datetime="2020-08-23T04:16:55.363Z" itemprop="datePublished">2020-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2020/08/23/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cyanru.com/blog/2020/08/23/hello-world/" data-id="cke6ky72c000mzrhi5x294jq7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-pizza-with-3n-slices" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2020/08/21/pizza-with-3n-slices/" class="article-date">
@@ -125,60 +235,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/08/21/pizza-with-3n-slices/" data-id="cke3xyks5000h4ilu1yj83ump" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/08/21/pizza-with-3n-slices/" data-id="cke6ky733001zzrhi9d045u52" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/08/21/hello-world/" class="article-date">
-  <time datetime="2020-08-21T07:32:37.468Z" itemprop="datePublished">2020-08-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/08/21/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/08/21/hello-world/" data-id="cke3xykrx00064ilucbh1eram" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -233,7 +294,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/07/29/minimum-number-of-increments-on-subarrays-to-form-a-target-array/" data-id="cke3xyks2000c4ilu6pnlb62s" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/07/29/minimum-number-of-increments-on-subarrays-to-form-a-target-array/" data-id="cke6ky72r001ezrhi40g1hosf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -291,7 +352,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/07/26/number-of-good-ways-to-split-a-string/" data-id="cke3z6qrb0016z4hk3akwg7gm" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/07/26/number-of-good-ways-to-split-a-string/" data-id="cke6ky72v001nzrhigtyoemgy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -350,7 +411,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/" data-id="cke3xyks4000f4ilu5zcf304k" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/" data-id="cke6ky72w001qzrhigv9detr2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -400,7 +461,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/07/25/find-a-value-of-a-mysterious-function-closest-to-target/" data-id="cke3xykrv00034ilugkql7qrf" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/07/25/find-a-value-of-a-mysterious-function-closest-to-target/" data-id="cke6ky726000azrhi2o22grr9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -449,7 +510,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/07/19/maximum-number-of-non-overlapping-substrings/" data-id="cke3xykrz00094ilu3476hks1" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/07/19/maximum-number-of-non-overlapping-substrings/" data-id="cke6ky72l0012zrhi0m2bb78f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -504,7 +565,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/07/05/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits/" data-id="cke3xyks3000e4ilue0ih74l6" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/07/05/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits/" data-id="cke6ky72t001kzrhi0om9hseg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -557,65 +618,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/06/13/largest-divisible-subset/" data-id="cke3xykrw00054ilubg7gax7w" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-paint-house-iii" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2020/06/07/paint-house-iii/" class="article-date">
-  <time datetime="2020-06-07T12:23:00.000Z" itemprop="datePublished">2020-06-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Leetcode/">Leetcode</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2020/06/07/paint-house-iii/">Paint House Iii&#39;s Solution</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Original Question</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/paint-house-iii">Paint House Iii</a><br><strong>Original Solution Post</strong>: <a target="_blank" rel="noopener" href="https://leetcode.com/problems/paint-house-iii/discuss/674298/C%2B%2BPython-Simple-DP-top-down-bottom-up">Solution</a></p>
-<p><strong>Complexity</strong><br><br>Time: <code>O(n * n * m * target)</code><br><br>Space: <code>O(n * m * target) (can be optimized to O(n * target))</code></p>
-<p><strong>C++, bottom-up, DP</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int minCost(vector&lt;int&gt;&amp; houses, vector&lt;vector&lt;int&gt;&gt;&amp; cost, int m, int n, int target) &#123;</span><br><span class="line">        int INF &#x3D; 1000000;</span><br><span class="line">        vector&lt;vector&lt;vector&lt;int&gt;&gt;&gt; dp(m, vector&lt;vector&lt;int&gt;&gt;(target + 1, vector&lt;int&gt;(n, INF)));</span><br><span class="line">            </span><br><span class="line">        for (int c &#x3D; 1; c &lt;&#x3D; n; c++)</span><br><span class="line">            if (houses[0] &#x3D;&#x3D; c)</span><br><span class="line">                dp[0][1][c - 1] &#x3D; 0;</span><br><span class="line">            else if (!houses[0])</span><br><span class="line">                dp[0][1][c - 1] &#x3D; cost[0][c - 1];</span><br><span class="line">        </span><br><span class="line">        for (int i &#x3D; 1; i &lt; m; i++)</span><br><span class="line">            for (int k &#x3D; 1; k &lt;&#x3D; min(target, i + 1); k++)</span><br><span class="line">                for (int c &#x3D; 1; c &lt;&#x3D; n; c++) &#123;</span><br><span class="line">                    if (houses[i] &amp;&amp; c !&#x3D; houses[i]) continue;</span><br><span class="line">                    int same_neighbor &#x3D; dp[i - 1][k][c - 1];</span><br><span class="line">                    int diff_neighbor &#x3D; INF;</span><br><span class="line">                    for (int c_ &#x3D; 1; c_ &lt;&#x3D; n; c_++)</span><br><span class="line">                        if (c_ !&#x3D; c)</span><br><span class="line">                            diff_neighbor &#x3D; min(diff_neighbor, dp[i - 1][k - 1][c_ - 1]);</span><br><span class="line">                    int paint_cost &#x3D; cost[i][c - 1] * int(!houses[i]);</span><br><span class="line">                    dp[i][k][c - 1] &#x3D; min(same_neighbor, diff_neighbor) + paint_cost;</span><br><span class="line">                &#125;</span><br><span class="line">        int res &#x3D; *min_element(dp.back().back().begin(), dp.back().back().end());</span><br><span class="line">        return (res &lt; INF) ? res : -1;            </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>Python, bottom-up, DP</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def minCost(self, houses: List[int], cost: List[List[int]], m: int, n: int, target: int) -&gt; int:</span><br><span class="line">        # dp[i][c][k]: i means the ith house, c means the cth color, k means k neighbor groups</span><br><span class="line">        dp &#x3D; [[[math.inf for _ in range(n)] for _ in range(target + 1)] for _ in range(m)]</span><br><span class="line">        </span><br><span class="line">        for c in range(1, n + 1):</span><br><span class="line">            if houses[0] &#x3D;&#x3D; c: dp[0][1][c - 1] &#x3D; 0</span><br><span class="line">            elif not houses[0]: dp[0][1][c - 1] &#x3D; cost[0][c - 1]</span><br><span class="line">                </span><br><span class="line">        for i in range(1, m):</span><br><span class="line">            for k in range(1, min(target, i + 1) + 1):</span><br><span class="line">                for c in range(1, n + 1):</span><br><span class="line">                    if houses[i] and c !&#x3D; houses[i]: continue</span><br><span class="line">                    same_neighbor_cost &#x3D; dp[i - 1][k][c - 1]</span><br><span class="line">                    diff_neighbor_cost &#x3D; min([dp[i - 1][k - 1][c_] for c_ in range(n) if c_ !&#x3D; c - 1] or [math.inf])</span><br><span class="line">                    paint_cost &#x3D; cost[i][c - 1] * (not houses[i])</span><br><span class="line">                    dp[i][k][c - 1] &#x3D; min(same_neighbor_cost, diff_neighbor_cost) + paint_cost</span><br><span class="line">        res &#x3D; min(dp[-1][-1])</span><br><span class="line">        return res if res &lt; math.inf else -1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>Python, top-down, recursion</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">from functools import lru_cache</span><br><span class="line">class Solution:</span><br><span class="line">    def minCost(self, houses: List[int], cost: List[List[int]], m: int, n: int, target: int) -&gt; int:</span><br><span class="line">        </span><br><span class="line">        @lru_cache(None)</span><br><span class="line">        def helper(i, k, c):</span><br><span class="line">            # min cost for paint the ith house in color c, resulting k neighborhood</span><br><span class="line">            if i &lt; 0 and k &lt;&#x3D; 1: return 0</span><br><span class="line">            if k &gt; i + 1 or k &lt; 1: return math.inf</span><br><span class="line">            if houses[i] and c !&#x3D; houses[i]: return math.inf</span><br><span class="line">            </span><br><span class="line">            paint_cost &#x3D; cost[i][c - 1] * (not houses[i])</span><br><span class="line">            prev_cost &#x3D; min(helper(i - 1, k, c), min([helper(i - 1, k - 1, c_) \</span><br><span class="line">                    for c_ in range(1, n + 1) if c_ !&#x3D; c] or [math.inf]))</span><br><span class="line">            </span><br><span class="line">            return paint_cost + prev_cost</span><br><span class="line">        </span><br><span class="line">        res &#x3D; min(helper(m - 1, target, c) for c in range(1, n + 1))</span><br><span class="line">        return res if res &lt; math.inf else -1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://cyanru.com/blog/2020/06/07/paint-house-iii/" data-id="cke3z6qre001dz4hkezjyb1bk" class="article-share-link">Share</a>
+      <a data-url="https://cyanru.com/blog/2020/06/13/largest-divisible-subset/" data-id="cke6ky72f000rzrhi1nxsdjde" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Algorithm/" rel="tag">Algorithm</a></li></ul>
@@ -631,7 +634,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/2/">Next &amp;raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/2/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -684,11 +687,15 @@
       <ul>
         
           <li>
-            <a href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
+            <a href="/blog/2020/08/23/stone-game-v/">Stone Game V&#39;s Solution</a>
           </li>
         
           <li>
-            <a href="/blog/2020/08/21/hello-world/">Hello World</a>
+            <a href="/blog/2020/08/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2020/08/21/pizza-with-3n-slices/">Pizza With 3N Slices&#39;s Solution</a>
           </li>
         
           <li>
@@ -697,10 +704,6 @@
         
           <li>
             <a href="/blog/2020/07/26/number-of-good-ways-to-split-a-string/">Number Of Good Ways To Split A String&#39;s Solution</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2020/07/26/number-of-sub-arrays-with-odd-sum/">Number Of Sub Arrays With Odd Sum&#39;s Solution</a>
           </li>
         
       </ul>
